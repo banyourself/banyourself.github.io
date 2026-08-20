@@ -156,6 +156,14 @@ const CASES = [
     blurb: "Swept every client-sendable packet registration in RLCraft and RLCraft Dregora, 400+ Forge mods across two packs with 50M+ downloads, and read the server-side handler for each one. Found 211 of them whose handlers run with no permission check, across 64 mods. Every single one is written up here: 4 mods critical, 22 high, 13 medium, 25 low. One chains all the way into level-2 command execution. The RLCraft dev team acknowledged the report, committed to shipping the fixes in a new mixins mod, and offered credit. One maintainer tightened their packet handling the same day I sent it.",
     status: { reported: true, patched: false, credited: false, cve: false },
     period: "August 2026 to Present",
+    // the pack footprint applies to every mod in the case, so it is stated once here
+    // rather than repeated on each finding
+    deployment: {
+      headline: { name: "RLCraft", url: "https://www.curseforge.com/minecraft/modpacks/rlcraft", downloads: "50M+", note: "most-downloaded CurseForge modpack" },
+      others: [
+        { name: "RLCraft Dregora", url: "", downloads: "1M+" }
+      ]
+    },
     scope: "Static analysis of jars I already had from hosting the pack, plus testing against my own local servers through a client-side mod I wrote for the purpose. Nothing unauthorized was touched. Every packet registration was cross-checked against two exposed-packet inventories built from the jars before any handler was graded. Reported privately to maintainers and the RLCraft development team before publishing anything. They confirmed the ungated packets were a known concern, are building a mixins mod to carry the fixes, and invited pull requests against it.",
     stack: ["Java", "Forge", "Vineflower", "CFR", "javap", "SimpleNetworkWrapper", "Gradle"],
     filterLabel: "Severity",
@@ -175,12 +183,6 @@ const CASES = [
         version: "2.5.1",
         cwe: "CWE-862 Missing Authorization",
         title: "KillWorldRequest - wipes every entity and tile-entity in a whole dimension",
-        deployment: {
-          headline: { name: "RLCraft", url: "https://www.curseforge.com/minecraft/modpacks/rlcraft", downloads: "50M+", note: "most-downloaded CurseForge modpack" },
-          others: [
-            { name: "RLCraft Dregora", url: "", downloads: "1M+" }
-          ]
-        },
         packets: [
           { name: "KillWorldRequest [critical]", does: "pregenerator.impl.network.packets.chunkRequest.KillWorldRequest \u00b7 channel chunkpregenerator", couldDo: "Kills ALL entities (by registry class) or breaks ALL tile-entities (by registry class) in an entire dimension (`tiles` bool)." },
           { name: "KillRequest [critical]", does: "pregenerator.impl.network.packets.chunkRequest.KillRequest \u00b7 channel chunkpregenerator", couldDo: "Kills ALL entities of an arbitrary registry name in the chunk at (x,z) via `setDead()`, or breaks all tile-entities of an arbitrary class at that chunk." },
@@ -218,12 +220,6 @@ const CASES = [
         version: "0.32.5",
         cwe: "CWE-862 Missing Authorization",
         title: "SyncItemDataPacket - writes any item into any entity's trinket slots",
-        deployment: {
-          headline: { name: "RLCraft", url: "https://www.curseforge.com/minecraft/modpacks/rlcraft", downloads: "50M+", note: "most-downloaded CurseForge modpack" },
-          others: [
-            { name: "RLCraft Dregora", url: "", downloads: "1M+" }
-          ]
-        },
         packets: [
           { name: "SyncItemDataPacket [critical]", does: "xzeroair.trinkets.network.SyncItemDataPacket.handleServerSafe \u00b7 channel xat", couldDo: "A client sends an entityID + slot + handler + ItemStack." },
           { name: "IncreasedReachPacket [high]", does: "xzeroair.trinkets.network.IncreasedReachPacket.handleServerSafe \u00b7 channel xat", couldDo: "A client sends an entityID + hand + targetEntityID + xyz." },
@@ -251,12 +247,6 @@ const CASES = [
         version: "1.4.8.4",
         cwe: "CWE-862 Missing Authorization",
         title: "PacketEditTileEntity - level-2 command execution via a planted script block",
-        deployment: {
-          headline: { name: "RLCraft", url: "https://www.curseforge.com/minecraft/modpacks/rlcraft", downloads: "50M+", note: "most-downloaded CurseForge modpack" },
-          others: [
-            { name: "RLCraft Dregora", url: "", downloads: "1M+" }
-          ]
-        },
         packets: [
           { name: "PacketEditTileEntity [critical]", does: "ivorius.reccomplex.network.PacketEditTileEntityHandler.processServer \u00b7 channel reccomplex", couldDo: "The headline primitive: a client sends `PacketEditTileEntity` (disc 5, Side.SERVER) with a BlockPos + NBT." },
           { name: "PacketWorldData [critical]", does: "ivorius.reccomplex.network.PacketWorldDataHandler.processServer \u00b7 channel reccomplex", couldDo: "A client sends a `worldData` NBT + source + two capture points." },
@@ -280,12 +270,6 @@ const CASES = [
         version: "v12.3",
         cwe: "CWE-862 Missing Authorization",
         title: "PlayerMovementMessage - arbitrary self-teleport and velocity",
-        deployment: {
-          headline: { name: "RLCraft", url: "https://www.curseforge.com/minecraft/modpacks/rlcraft", downloads: "50M+", note: "most-downloaded CurseForge modpack" },
-          others: [
-            { name: "RLCraft Dregora", url: "", downloads: "1M+" }
-          ]
-        },
         packets: [
           { name: "PlayerMovementMessage [critical]", does: "com.yyon.grapplinghook.network.PlayerMovementMessage$Handler$runner.run \u00b7 channel grapplemodchannel", couldDo: "A client sends an entityId + position (x,y,z) + velocity (mx,my,mz)." },
           { name: "GrappleEndMessage [high]", does: "com.yyon.grapplinghook.network.GrappleEndMessage$Handler$runner.run \u00b7 channel grapplemodchannel", couldDo: "A client sends an entityId and a set of arrowIds." },

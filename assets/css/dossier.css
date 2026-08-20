@@ -551,6 +551,7 @@ a:hover { color: var(--stamp-red); }
 .deploy__head { font-family: var(--f-stamp); letter-spacing: .1em; text-transform: uppercase; font-size: .82rem; margin-bottom: .6rem; }
 .deploy__big { font-family: var(--f-mono); font-size: 1.5rem; font-weight: 600; line-height: 1; }
 .deploy ul { margin: .6rem 0 0; padding-left: 1.1rem; font-size: .9rem; }
+.deploy__sub { margin-top: .9rem; padding-top: .9rem; border-top: 1px solid var(--rule); }
 
 pre {
   background: #201d17; color: #ded4bb;

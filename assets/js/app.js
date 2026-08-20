@@ -253,10 +253,28 @@
         <div style="margin-top:.9rem;display:flex;flex-wrap:wrap;gap:.6rem">${stamps(c.status)}</div>
       </div>`;
 
-    const scope = c.scope ? `
+    // the footprint is a property of the pack, not of any one packet, so it lives on the
+    // case and is stated once here rather than repeated on every finding
+    const dep = c.deployment || {};
+    const footprint = dep.headline ? `
+      <div class="deploy__sub">
+        <div class="lbl">Deployment footprint</div>
+        <div class="deploy__big">${esc(dep.headline.downloads)}</div>
+        <div class="lbl" style="margin-top:.25rem">
+          downloads -
+          ${dep.headline.url ? `<a href="${esc(dep.headline.url)}" target="_blank" rel="noopener">${esc(dep.headline.name)}</a>` : esc(dep.headline.name)}
+          ${dep.headline.note ? `(${esc(dep.headline.note)})` : ""}
+        </div>
+        ${(dep.others || []).length ? `<ul>${dep.others.map((o) =>
+          `<li>${o.url ? `<a href="${esc(o.url)}" target="_blank" rel="noopener">${esc(o.name)}</a>` : esc(o.name)}${o.downloads ? `, ${esc(o.downloads)} downloads` : ""}</li>`
+        ).join("")}</ul>` : ""}
+      </div>` : "";
+
+    const scope = (c.scope || footprint) ? `
       <div class="deploy" style="border-left:.3rem solid var(--stamp-green)">
         <div class="deploy__head">Scope &amp; authorization</div>
-        <p style="margin:0;font-size:.95rem">${linkify(esc(c.scope))}</p>
+        ${c.scope ? `<p style="margin:0;font-size:.95rem">${linkify(esc(c.scope))}</p>` : ""}
+        ${footprint}
       </div>` : "";
 
     const stack = (c.stack || []).length
@@ -351,21 +369,6 @@
     setTitle(`${f.ref} ${f.title}`);
     const sev = String(f.severity).toLowerCase();
 
-    const dep = f.deployment || {};
-    const deployment = dep.headline ? `
-      <div class="deploy">
-        <div class="deploy__head">Deployment footprint</div>
-        <div class="deploy__big">${esc(dep.headline.downloads)}</div>
-        <div class="lbl" style="margin-top:.25rem">
-          downloads -
-          ${dep.headline.url ? `<a href="${esc(dep.headline.url)}" target="_blank" rel="noopener">${esc(dep.headline.name)}</a>` : esc(dep.headline.name)}
-          ${dep.headline.note ? `(${esc(dep.headline.note)})` : ""}
-        </div>
-        ${(dep.others || []).length ? `<ul>${dep.others.map((o) =>
-          `<li>${o.url ? `<a href="${esc(o.url)}" target="_blank" rel="noopener">${esc(o.name)}</a>` : esc(o.name)}${o.downloads ? `, ${esc(o.downloads)} downloads` : ""}</li>`
-        ).join("")}</ul>` : ""}
-      </div>` : "";
-
     const packets = (f.packets || []).length ? `
       <table class="tbl">
         <caption>Affected packet handlers</caption>
@@ -413,7 +416,6 @@
             so the bars below are empty rather than hidden.
           </p>` : ""}
         </div>
-        ${deployment}
         ${beats}
         ${timeline}
       </article>`;
