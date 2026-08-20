@@ -6,7 +6,7 @@ Plain `python -m http.server` sends Last-Modified, so browsers hang onto the JS
 and CSS and you end up staring at an old page wondering why your edit did nothing.
 This sends no-store on everything instead.
 """
-import http.server, os, socketserver, sys
+import errno, http.server, os, socketserver, sys
 
 PORT = int(sys.argv[1]) if len(sys.argv) > 1 else 8000
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -28,12 +28,19 @@ class NoCache(http.server.SimpleHTTPRequestHandler):
             super().log_message(fmt, *args)
 
 
-class Reusable(socketserver.TCPServer):
-    allow_reuse_address = True
-
-
 if __name__ == "__main__":
-    with Reusable(("127.0.0.1", PORT), NoCache) as srv:
+    # TCPServer defaults allow_reuse_address to False. Do not set it True: on Windows that
+    # lets a second serve.py bind 8000 on top of the first, and they race to serve stale files.
+    try:
+        srv = socketserver.TCPServer(("127.0.0.1", PORT), NoCache)
+    except OSError as e:
+        if e.errno != errno.EADDRINUSE:
+            raise
+        raise SystemExit(
+            "port %d is already serving. stop that one first, or pick another port:\n"
+            "  python tools/serve.py %d" % (PORT, PORT + 1)
+        )
+    with srv:
         print("serving %s\n  http://localhost:%d\n(ctrl-c to stop)" % (ROOT, PORT))
         try:
             srv.serve_forever()
