@@ -414,16 +414,19 @@ a:hover { color: var(--stamp-red); }
 .pill {
   font-family: var(--f-mono); font-size: .65rem; letter-spacing: .1em;
   text-transform: uppercase; padding: .18rem .45rem;
-  border: 1px solid currentColor; border-radius: 2px;
-  /* on the manila folder card these were 2.79:1 (medium) to 3.95:1 (info), all under
-     AA for text this size. A paper backing puts them on the light surface instead. */
-  background: var(--paper-lit);
+  border: 1px solid rgba(33,30,25,.28); border-radius: 2px;
+  /* Coloring the text left every tone reading as the same beige at .65rem, so tone the
+     background and go light on top, the same call the gui theme already made. paper-lit
+     on these fills runs 5.35:1 (high) to 7.97:1 (critical). */
+  color: var(--paper-lit);
+  background: var(--sev-info);
+  font-weight: 600;
 }
-.pill--critical { color: var(--sev-critical); }
-.pill--high     { color: var(--sev-high); }
-.pill--medium   { color: var(--sev-medium); }
-.pill--low      { color: var(--sev-low); }
-.pill--info     { color: var(--sev-info); }
+.pill--critical { background: var(--sev-critical); }
+.pill--high     { background: var(--sev-high); }
+.pill--medium   { background: var(--sev-medium); }
+.pill--low      { background: var(--sev-low); }
+.pill--info     { background: var(--sev-info); }
 
 .crumb {
   font-family: var(--f-mono); font-size: .75rem; letter-spacing: .08em;

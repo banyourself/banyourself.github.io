@@ -728,7 +728,7 @@
 
   // auto case numbers for any case that doesn't set one
   CASES.forEach((c, i) => {
-    if (!c.caseNo) c.caseNo = `${TOKENS.TODAY}-${String(i + 1).padStart(3, "0")}`;
+    if (!c.caseNo) c.caseNo = String(i + 1).padStart(3, "0");
   });
 
   renderCover();

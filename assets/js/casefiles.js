@@ -150,7 +150,7 @@ const CASES = [
 
   {
     id: "MC-001",
-    caseNo: "{TODAY}-001",
+    caseNo: "001",
     title: "Modded Minecraft - Missing Packet Authorization",
     kind: "Vulnerability Research",
     blurb: "Swept every client-sendable packet registration in RLCraft and RLCraft Dregora, 400+ Forge mods across two packs with 50M+ downloads, and read the server-side handler for each one. Found 211 of them whose handlers run with no permission check, across 64 mods. Every single one is written up here: 4 mods critical, 22 high, 13 medium, 25 low. One chains all the way into level-2 command execution. The RLCraft dev team acknowledged the report, committed to shipping the fixes in a new mixins mod, and offered credit. One maintainer tightened their packet handling the same day I sent it.",
@@ -1633,7 +1633,7 @@ const CASES = [
       { name: "API",              tone: "info" },
       { name: "SQL",              tone: "info" }
     ],
-    caseNo: "{TODAY}-002",
+    caseNo: "002",
     title: "CS:GO Server Plugins - Anti-Cheat, Anti-VPN, Gamemodes",
     kind: "Defensive Tooling",
     blurb: "Fourteen SourcePawn plugins and one C++ Metamod extension for the CS:GO servers I run. A server-sided anticheat with about 45 detectors, a VPN blocker that merges local CIDR ranges with reputation APIs, two gamemodes of my own, and a stack of community plugins I forked and fixed. Roughly 30,000 lines of SourcePawn plus 800 of C++.",
@@ -2078,7 +2078,7 @@ the bug report happened to name.` }
       { name: "Proxmox",                   tone: "low" },
       { name: "Cloudflare",                tone: "info" }
     ],
-    caseNo: "{TODAY}-003",
+    caseNo: "003",
     title: "Minecraft & CS:GO Servers - Config and Network Management",
     kind: "Infrastructure / Operations",
     blurb: "Running public game servers is a sysadmin job wearing a hoodie. The two games turned out to be completely different jobs. Minecraft was one box I owned end to end: DNS, a balancer, the JVM, the restart schedule. CS:GO is two rented servers on two continents, where the real problems are config that fights itself and working out what NOT to share between regions.",
@@ -2456,7 +2456,7 @@ one, and an untested backup is a hope rather than a plan.` }
       { name: "Splunk / SIEM",  tone: "medium" },
       { name: "Virtualization", tone: "info" }
     ],
-    caseNo: "{TODAY}-004",
+    caseNo: "004",
     title: "Home Security Lab - Build & Detection Log",
     kind: "Infrastructure / Blue Team",
     blurb: "A segmented lab where I attack myself and then try to catch it in the logs. Catching it is the whole point.",
@@ -2592,7 +2592,7 @@ whole thing gets less precious.`
       { name: "Pi-hole",       tone: "info" },
       { name: "Raspberry Pi",  tone: "info" }
     ],
-    caseNo: "{TODAY}-005",
+    caseNo: "005",
     title: "Network-Wide DNS Filtering - Pi-hole on Raspberry Pi",
     kind: "Infrastructure / Blue Team",
     blurb: "DNS sinkhole for the whole house. Turned into a lesson in how much a network says when nobody is listening.",
