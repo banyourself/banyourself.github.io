@@ -6,7 +6,7 @@
 <img src="https://banyourself.github.io/assets/img/mc-banner.gif" alt="Kevin Le, Security Operations and Cloud Security">
 
 ```
-  SUBJECT .............. Le, Kevin  ·  @banyourself
+  SUBJECT .............. Le, Kevin · @banyourself
   LOCATION ............. Westminster, California
   EDUCATION ............ Coastline College, A.S. Cybersecurity, class of 2027 · GPA 3.47
   CREDENTIALS .......... CompTIA ×4 · Microsoft ×2 · & MORE · 2 in progress

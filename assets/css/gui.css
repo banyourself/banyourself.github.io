@@ -579,3 +579,6 @@
 [data-theme="gui"] .pill--medium   { background: #6f5a10; }
 [data-theme="gui"] .pill--low      { background: #3d5c30; }
 [data-theme="gui"] .pill--info     { background: #3a4655; }
+
+[data-theme="gui"] .pager { border-top: 2px solid var(--mc-shadow, #555); }
+[data-theme="gui"] .pager__gap { font-family: var(--f-mono); font-size: 1rem; }

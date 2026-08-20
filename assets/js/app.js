@@ -221,12 +221,15 @@
 
   let activeCase = null;
   let sevFilter = "all";
+  let page = 1;
+  const PER_PAGE = 10;
 
   function renderCase(id) {
     const c = CASES.find((x) => x.id === id);
     if (!c) return go("#/cases");
     activeCase = c;
     sevFilter = "all";
+    page = 1;
     setTitle(c.title);
 
     // color the meta block by the worst finding, not just "has findings"
@@ -260,7 +263,8 @@
           ${SEV_ORDER.filter((s) => c.findings.some((f) => String(f.severity).toLowerCase() === s))
             .map((s) => `<button class="chip" data-sev="${s}" aria-pressed="false">${esc(toneLabel(c, s))}</button>`).join("")}
         </div>
-        <ul class="findings" id="findings-list"></ul>`;
+        <ul class="findings" id="findings-list"></ul>
+        <nav class="pager" id="findings-pager" aria-label="Finding pages"></nav>`;
     } else {
       body = `<div class="dossier">${(c.sections || []).map((s, i) => `
         <div class="beat">
@@ -289,7 +293,11 @@
       .filter((f) => sevFilter === "all" || String(f.severity).toLowerCase() === sevFilter)
       .sort((a, b) => sevRank(a.severity) - sevRank(b.severity));
 
-    list.innerHTML = items.length ? items.map((f) => {
+    const pages = Math.max(1, Math.ceil(items.length / PER_PAGE));
+    if (page > pages) page = pages;
+    const shown = items.slice((page - 1) * PER_PAGE, page * PER_PAGE);
+
+    list.innerHTML = shown.length ? shown.map((f) => {
       const sev = String(f.severity).toLowerCase();
       return `
         <li>
@@ -303,7 +311,26 @@
             <span class="finding__ref">${esc(f.ref)} →</span>
           </button>
         </li>`;
-    }).join("") : `<li><p class="sub">No findings at this severity.</p></li>`;
+    }).join("") : `<li><p class="sub">Nothing at this filter.</p></li>`;
+
+    const pager = $("#findings-pager");
+    if (!pager) return;
+    if (pages < 2) { pager.innerHTML = ""; return; }
+    const from = (page - 1) * PER_PAGE + 1;
+    const to = Math.min(page * PER_PAGE, items.length);
+    // page numbers stay a short window so 7 pages does not become 7 buttons of noise
+    const win = [];
+    for (let n = 1; n <= pages; n++) {
+      if (n === 1 || n === pages || Math.abs(n - page) <= 1) win.push(n);
+      else if (win[win.length - 1] !== "gap") win.push("gap");
+    }
+    pager.innerHTML = `
+      <span class="lbl">${from}-${to} of ${items.length}</span>
+      <button class="chip" data-page="prev"${page === 1 ? " disabled" : ""}>Prev</button>
+      ${win.map((n) => n === "gap"
+        ? `<span class="pager__gap">...</span>`
+        : `<button class="chip" data-page="${n}" aria-pressed="${n === page}">${n}</button>`).join("")}
+      <button class="chip" data-page="next"${page === pages ? " disabled" : ""}>Next</button>`;
   }
 
   function renderFinding(ref) {
@@ -524,9 +551,25 @@
     const back = e.target.closest("[data-go]");
     if (back) return go(back.dataset.go);
 
+    const pageBtn = e.target.closest(".chip[data-page]");
+    if (pageBtn) {
+      const v = pageBtn.dataset.page;
+      const items = (activeCase.findings || []).filter(
+        (f) => sevFilter === "all" || String(f.severity).toLowerCase() === sevFilter);
+      const pages = Math.max(1, Math.ceil(items.length / PER_PAGE));
+      page = v === "prev" ? Math.max(1, page - 1)
+           : v === "next" ? Math.min(pages, page + 1)
+           : Math.min(pages, Math.max(1, Number(v) || 1));
+      renderFindings();
+      const tabs = $(".tabs");
+      if (tabs) window.scrollTo({ top: tabs.offsetTop - 8, behavior: "smooth" });
+      return;
+    }
+
     const chip = e.target.closest(".chip[data-sev]");
     if (chip) {
       sevFilter = chip.dataset.sev;
+      page = 1;
       $$(".chip[data-sev]").forEach((c) => c.setAttribute("aria-pressed", String(c === chip)));
       renderFindings();
       return;

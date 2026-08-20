@@ -453,20 +453,21 @@ a:hover { color: var(--stamp-red); }
 .finding {
   position: relative;
   display: grid;
-  /* 1fr refuses to shrink below its content, which squeezed the label column onto its
-     min and wrapped multi-word labels over the title. max-content pins the label,
-     minmax(0,1fr) lets the title column give way instead. */
-  grid-template-columns: .55rem max-content minmax(0,1fr) auto;
+  /* .finding__bar is absolutely positioned, so it is NOT a grid item. Only three
+     items get placed, so a leading .55rem bar column pushed the label into it and
+     it overflowed across the title. Three columns, and padding-left leaves room
+     for the bar. */
+  grid-template-columns: max-content minmax(0,1fr) auto;
   gap: 0 1rem; align-items: center;
   width: 100%; text-align: left;
   font: inherit; color: var(--ink);
   background: transparent;
   border: none; border-bottom: 1px solid var(--rule-soft);
-  padding: .95rem .5rem .95rem 0;
+  padding: .95rem .5rem .95rem .95rem;
   cursor: pointer;
   transition: background .12s, padding-left .12s;
 }
-.finding:hover { background: rgba(215,195,154,.3); padding-left: .4rem; }
+.finding:hover { background: rgba(215,195,154,.3); padding-left: 1.3rem; }
 .finding__bar { position: absolute; left: 0; top: .45rem; bottom: .45rem; width: .3rem; background: currentColor; }
 .finding__sev {
   font-family: var(--f-mono); font-size: .68rem; letter-spacing: .12em;
@@ -484,7 +485,7 @@ a:hover { color: var(--stamp-red); }
 .sev-info     { color: var(--sev-info); }
 
 @media (max-width: 640px) {
-  .finding { grid-template-columns: .55rem 1fr; }
+  .finding { grid-template-columns: max-content minmax(0,1fr); }
   .finding__ref { grid-column: 2; }
 }
 
@@ -688,3 +689,13 @@ code { font-family: var(--f-mono); font-size: .9em; }
   cursor: default;
 }
 .redact--sealed:hover { background: var(--redact); }
+
+/* pager under the findings list */
+.pager {
+  display: flex; flex-wrap: wrap; align-items: center; gap: .45rem;
+  margin-top: 1.2rem; padding-top: .9rem;
+  border-top: 1px solid var(--rule-soft);
+}
+.pager .lbl { margin-right: .4rem; }
+.pager .chip[disabled] { opacity: .38; cursor: default; }
+.pager__gap { font-family: var(--f-mono); font-size: .72rem; color: var(--ink-faint); }
