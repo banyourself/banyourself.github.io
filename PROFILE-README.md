@@ -46,12 +46,21 @@ numerous packets with no permission gate that nobody had reported, which might b
 a simple overlook but it can be severely exploited to cause chaos by users with
 malicious intent.
 
-| Ref | Severity | Weakness | Status |
-|:--|:--|:--|:--|
-| `MC-001-A` | **Critical** | CWE-862 Missing Authorization | ⟨reported / patched⟩ |
-| `MC-001-B` | High | CWE-⟨###⟩ | ⟨...⟩ |
-| `MC-001-C` | Medium | CWE-⟨###⟩ | ⟨...⟩ |
-| `MC-001-D` | Low | CWE-⟨###⟩ | ⟨...⟩ |
+Every one of these is the same weakness, **CWE-862 Missing Authorization**: a handler
+registered on `Side.SERVER` that acts on whatever the client sent without checking whether
+the sender is allowed to. What changes between them is the severity, and that is graded on
+what the packet actually lets you do.
+
+| Severity | Mods | Packets | What it means | Status |
+|:--|:--|:--|:--|:--|
+| **Critical** | 4 | 32 | Wipes a whole dimension, or reaches level-2 command execution | Reported, fix committed |
+| High | 22 | 71 | Changes any entity or tile by ID, arbitrary teleport, or attack with no reach check | Reported, fix committed |
+| Medium | 13 | 44 | Self-contained or read-only, but the gate is still missing | Reported, fix committed |
+| Low | 25 | 64 | `Side.CLIENT` so a client cannot send it, a no-op handler, or self-only | Reported, fix committed |
+
+The low tier matters as much as the top one. Most of those turned out to be registered
+server-to-client, which means a client cannot forge them at all, and calling those
+vulnerabilities would have been wrong.
 
 **Method:** decompile with Vineflower and [CFR](https://github.com/leibnitz27/cfr), find the network registration
 (`SimpleNetworkWrapper#registerMessage`), trace every server-bound handler, then
