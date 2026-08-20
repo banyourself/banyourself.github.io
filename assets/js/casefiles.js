@@ -20,7 +20,7 @@ const SUBJECT = {
   },
   location: "Westminster, California",
   // blank keeps the "not on file" card
-  photo: "assets/img/subject.jpg",
+  photo: "assets/img/subject.webp",
   school: "Coastline College - A.S. Cybersecurity, class of 2027",
   status: "Seeking {INTERN_YEAR} Internship for Cybersecurity, IT, Cloud/Network Security, or SOC",
   links: {

@@ -154,6 +154,11 @@
     const img = document.createElement("img");
     img.alt = s.name;
     img.addEventListener("error", () => {
+      // pre-2020 Safari has no webp, retry the jpg once before giving up
+      if (/\.webp$/.test(img.getAttribute("src") || "")) {
+        img.src = s.photo.replace(/\.webp$/, ".jpg");
+        return;
+      }
       mug.innerHTML = keep;
       mug.classList.remove("mug--photo");
     });

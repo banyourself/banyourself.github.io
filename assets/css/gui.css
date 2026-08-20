@@ -198,15 +198,20 @@
   background: var(--paper-shade);
   border: 2px solid #000;
   box-shadow: var(--bevel-out);
-  padding: .8rem .8rem .8rem .5rem;
+  padding: .8rem .8rem .8rem 1.6rem;
   transition: none;
 }
 [data-theme="gui"] .finding:hover {
   background: #9d9d9d;
-  padding-left: .5rem;
+  padding-left: 1.6rem;
   box-shadow: var(--bevel-out), inset 0 0 0 2px #fff;
 }
-[data-theme="gui"] .finding__bar  { width: .45rem; box-shadow: var(--bevel-in); }
+/* full height and flush to the border, so it reads as the slot's coloured edge
+   instead of a stripe floating against the label */
+[data-theme="gui"] .finding__bar {
+  top: 0; bottom: 0; width: .55rem;
+  box-shadow: var(--bevel-in);
+}
 [data-theme="gui"] .finding__sev  { font-family: var(--f-stamp); font-size: .55rem; }
 [data-theme="gui"] .finding__t    { font-size: 1.28rem; }
 [data-theme="gui"] .finding__mod  { font-size: 1.05rem; }
@@ -345,6 +350,9 @@
 [data-theme="gui"] .mug figcaption { color: var(--ink-soft); }
 [data-theme="gui"] .mug { transform: none; }
 [data-theme="gui"] a { color: var(--mc-blue); }
+/* the generic anchor rule above outranks .skip and made the skip link dark blue on
+   near-black, 1.92:1, once a keyboard user focused it */
+[data-theme="gui"] .skip { color: var(--mc-white); }
 [data-theme="gui"] a:hover { color: var(--mc-red); }
 [data-theme="gui"] :focus-visible { outline: 3px solid #ffffa0; outline-offset: 2px; }
 [data-theme="gui"] .panel:focus,

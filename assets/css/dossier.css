@@ -8,7 +8,7 @@
 
   --ink:          #211e19;
   --ink-soft:     #4c463b;
-  --ink-faint:    #7a7263;
+  --ink-faint:    #756d5f;
   --rule:         #b6ab90;
   --rule-soft:    #cdc4ab;
 
@@ -390,7 +390,8 @@ a:hover { color: var(--stamp-red); }
   font-size: .66rem;
   letter-spacing: .1em;
   text-transform: uppercase;
-  color: var(--ink-faint);
+  /* darker than --ink-faint: this one sits on manila, not paper, and 4.5:1 needs it */
+  color: #575146;
   margin-top: .2rem;
 }
 .folder__t {
@@ -458,16 +459,16 @@ a:hover { color: var(--stamp-red); }
      it overflowed across the title. Three columns, and padding-left leaves room
      for the bar. */
   grid-template-columns: max-content minmax(0,1fr) auto;
-  gap: 0 1rem; align-items: center;
+  gap: 0 1.5rem; align-items: center;
   width: 100%; text-align: left;
   font: inherit; color: var(--ink);
   background: transparent;
   border: none; border-bottom: 1px solid var(--rule-soft);
-  padding: .95rem .5rem .95rem .95rem;
+  padding: .95rem .5rem .95rem 1.15rem;
   cursor: pointer;
   transition: background .12s, padding-left .12s;
 }
-.finding:hover { background: rgba(215,195,154,.3); padding-left: 1.3rem; }
+.finding:hover { background: rgba(215,195,154,.3); padding-left: 1.5rem; }
 .finding__bar { position: absolute; left: 0; top: .45rem; bottom: .45rem; width: .3rem; background: currentColor; }
 .finding__sev {
   font-family: var(--f-mono); font-size: .68rem; letter-spacing: .12em;
