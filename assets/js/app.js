@@ -538,7 +538,7 @@
       return;
     }
     ul.innerHTML = notes.map((n) =>
-      `<li><time>${esc(n.date)}</time><p>${esc(n.note)}</p></li>`).join("");
+      `<li><time>${esc(n.date)}</time>${prose(n.note)}</li>`).join("");
   }
 
   document.addEventListener("click", (e) => {
