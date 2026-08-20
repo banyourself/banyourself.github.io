@@ -502,7 +502,7 @@ that's all. No badge here is aspirational.
 
 - [ ] Track the reported MC-001 findings through to a deployed patch
 - [ ] A.S. Cybersecurity, Coastline College, 2027
-- [ ] B.S. degree in Cybersecurity, IT, or Informatics from a University after graduating from community college.
+- [ ] Accepted and enrolling into a University for a bachelor's degree in Cybersecurity, IT, or Informatics
 - [ ] 2027 internship: Cybersecurity, IT, Cloud/Network Security, SOC, or Security Analyst field
 
 ---
