@@ -18,8 +18,8 @@
   --redact:       #17150f;
 
   --sev-critical: #8c2019;
-  --sev-high:     #a8551e;
-  --sev-medium:   #87701d;
+  --sev-high:     #9a4e1b;
+  --sev-medium:   #6e5b17;
   --sev-low:      #4f6350;
   --sev-info:     #4a5766;
 
@@ -414,6 +414,9 @@ a:hover { color: var(--stamp-red); }
   font-family: var(--f-mono); font-size: .65rem; letter-spacing: .1em;
   text-transform: uppercase; padding: .18rem .45rem;
   border: 1px solid currentColor; border-radius: 2px;
+  /* on the manila folder card these were 2.79:1 (medium) to 3.95:1 (info), all under
+     AA for text this size. A paper backing puts them on the light surface instead. */
+  background: var(--paper-lit);
 }
 .pill--critical { color: var(--sev-critical); }
 .pill--high     { color: var(--sev-high); }
@@ -450,9 +453,10 @@ a:hover { color: var(--stamp-red); }
 .finding {
   position: relative;
   display: grid;
-  /* max-content so a multi-word category label sizes its own column instead of
-     wrapping across the title next to it. */
-  grid-template-columns: .55rem minmax(5.5rem,max-content) 1fr auto;
+  /* 1fr refuses to shrink below its content, which squeezed the label column onto its
+     min and wrapped multi-word labels over the title. max-content pins the label,
+     minmax(0,1fr) lets the title column give way instead. */
+  grid-template-columns: .55rem max-content minmax(0,1fr) auto;
   gap: 0 1rem; align-items: center;
   width: 100%; text-align: left;
   font: inherit; color: var(--ink);
@@ -467,6 +471,7 @@ a:hover { color: var(--stamp-red); }
 .finding__sev {
   font-family: var(--f-mono); font-size: .68rem; letter-spacing: .12em;
   text-transform: uppercase; font-weight: 600;
+  white-space: nowrap; align-self: start; padding-top: .15rem;
 }
 .finding__t { font-family: var(--f-prose); font-size: 1.02rem; line-height: 1.4; }
 .finding__ref { font-family: var(--f-mono); font-size: .7rem; color: var(--ink-faint); letter-spacing: .08em; }
