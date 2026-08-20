@@ -61,9 +61,8 @@ const CREDENTIALS = {
   ]
 };
 
-// CS:GO plugin repos are private until Kevin flips them. Set this to true and every
-// plugin row turns into a real link, no other edit needed.
-const REPOS_PUBLIC = false;
+// Set this to false and every plugin row falls back to "name (private repo)".
+const REPOS_PUBLIC = true;
 const repoRow = (name) => REPOS_PUBLIC
   ? ["Source", "https://github.com/banyourself/" + name]
   : ["Source", name + " (private repo)"];
