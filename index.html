@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Kevin Le | Cybersecurity Student</title>
+<meta name="description" content="Case files of a cybersecurity student: vulnerability research, detection engineering, and home-lab blue-team work. Kevin Le (@banyourself).">
+
+<!-- link preview -->
+<meta property="og:title" content="Kevin Le | Cybersecurity Student">
+<meta property="og:description" content="Vulnerability research, detection engineering, and blue-team lab work - documented as case files.">
+<meta property="og:type" content="website">
+<!-- TODO: set these once live -->
+<meta property="og:url" content="https://banyourself.github.io/">
+<meta property="og:image" content="https://banyourself.github.io/assets/img/og.png">
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M7 2h13l6 6v22H7z' fill='%23f2ecdb' stroke='%23211e19' stroke-width='2.5' stroke-linejoin='round'/%3E%3Cpath d='M19.5 2.5v6.5h6.5' fill='%23c9b083' stroke='%23211e19' stroke-width='2.5' stroke-linejoin='round'/%3E%3Crect x='11' y='14.5' width='11' height='2.5' fill='%23211e19'/%3E%3Crect x='11' y='19.5' width='11' height='2.5' fill='%23211e19'/%3E%3Crect x='11' y='24.5' width='7' height='2.5' fill='%239c2b21'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Special+Elite&family=IBM+Plex+Mono:wght@400;600&family=Spectral:ital,wght@0,400;0,600;1,400&family=Press+Start+2P&family=VT323&display=swap">
+<link rel="stylesheet" href="assets/css/dossier.css">
+<link rel="stylesheet" href="assets/css/gui.css">
+<link rel="stylesheet" href="assets/css/ambient.css">
+
+<script>
+  /* Applied before first paint so switching themes never flashes the wrong one. */
+  try {
+    var t = localStorage.getItem("theme");
+    if (t === "gui") document.documentElement.setAttribute("data-theme", "gui");
+  } catch (e) {}
+</script>
+</head>
+<body>
+
+<a class="skip" href="#main">Skip to case files</a>
+
+<div id="ambient" aria-hidden="true"></div>
+
+<div id="reel" hidden>
+  <div class="reel-line"></div>
+  <button class="reel-grab" type="button" aria-label="Get my resume">
+    <span class="reel-label">Resume</span>
+    <span class="reel-sub">Click me</span>
+  </button>
+</div>
+
+
+<div class="wrap">
+
+  <div class="toggle-wrap">
+    <button id="theme-toggle" type="button" aria-pressed="false">
+      <span id="theme-label">Minecraft Mode</span>
+    </button>
+  </div>
+
+  
+  <header class="cover">
+    <div class="punch" aria-hidden="true"><i></i><i></i><i></i></div>
+
+    <div class="cover__bar">
+      <span class="cover__kicker">Personnel&nbsp;File</span>
+      <span class="lbl" id="cover-fileno">FILE NO. -</span>
+      <span class="stamp stamp--lg" data-land>Classified</span>
+    </div>
+
+    <div class="cover__grid">
+      <div>
+        <h1 id="cover-name">
+          <!-- filled by app.js -->
+          <small id="cover-role"></small>
+        </h1>
+
+        <p class="cover__line"><span class="tw" id="cover-line"></span></p>
+
+        <div class="cover__meta">
+          <div class="row"><span class="lbl">Track</span><span class="lead"></span><span class="val" id="m-track"></span></div>
+          <div class="row"><span class="lbl">Education</span><span class="lead"></span><span class="val" id="m-school"></span></div>
+          <div class="row"><span class="lbl">Location</span><span class="lead"></span><span class="val" id="m-loc"></span></div>
+          <div class="row"><span class="lbl">Status</span><span class="lead"></span><span class="val" id="m-status"></span></div>
+        </div>
+
+        <div class="links" id="cover-links"></div>
+      </div>
+
+      <figure class="mug" id="mug">
+        <div class="clip" aria-hidden="true"></div>
+        <figcaption class="lbl">
+          Photograph<br>not on file<br><br>[ 4 × 5 ]
+        </figcaption>
+      </figure>
+    </div>
+  </header>
+
+  
+  <nav class="tabs" role="tablist" aria-label="Sections">
+    <button class="tab" role="tab" id="tab-cases" aria-controls="panel-cases" aria-selected="true">Case Files</button>
+    <button class="tab" role="tab" id="tab-creds" aria-controls="panel-creds" aria-selected="false">Credentials</button>
+    <button class="tab" role="tab" id="tab-caps"  aria-controls="panel-caps"  aria-selected="false">Capabilities</button>
+    <button class="tab" role="tab" id="tab-about" aria-controls="panel-about" aria-selected="false">Contact</button>
+  </nav>
+
+  <main class="sheet" id="main">
+
+    <!-- ---------------- CASE FILES ---------------- -->
+    <section class="panel" role="tabpanel" id="panel-cases" aria-labelledby="tab-cases" tabindex="-1">
+
+      <!-- level 1: the index of folders -->
+      <div id="view-index">
+        <h2 class="h">Case Files <span class="h__no" id="case-count"></span></h2>
+        <p class="sub">
+          Each folder is a body of work I actually did, written up so you can check it.
+          Findings are graded by severity. Anything still under embargo is
+          <span class="redact" tabindex="0" role="button" aria-label="Redacted example - click to reveal">blacked out until it is patched</span>.
+        </p>
+        <div class="folders" id="folders"></div>
+      </div>
+
+      <!-- level 2: one case, its findings or its dossier -->
+      <div id="view-case" hidden></div>
+
+      <!-- level 3: one finding, full writeup -->
+      <div id="view-finding" hidden></div>
+    </section>
+
+    <!-- ---------------- CREDENTIALS ---------------- -->
+    <section class="panel" role="tabpanel" id="panel-creds" aria-labelledby="tab-creds" tabindex="-1" hidden>
+      <h2 class="h">Credentials</h2>
+      <p class="sub">
+        Earned certifications, listed with the issued year. Every one is verifiable:
+        Credly holds the issuer-signed badges, LinkedIn has the same list but verifies
+        other certificates. Not all obtained certifications are listed below.
+      </p>
+      <div class="creds" id="creds-earned"></div>
+
+      <h3 class="h" id="creds-pursuing-head" style="margin-top:2.5rem">In Progress</h3>
+      <div class="creds" id="creds-pursuing"></div>
+
+      <div class="links" id="verify-links" style="margin-top:1.8rem"></div>
+    </section>
+
+    <!-- ---------------- CAPABILITIES ---------------- -->
+    <section class="panel" role="tabpanel" id="panel-caps" aria-labelledby="tab-caps" tabindex="-1" hidden>
+      <h2 class="h">Capabilities</h2>
+      <p class="sub">
+        <strong>Working</strong> means I have used it to finish something real.
+        <strong>Pending</strong> means I am actively building depth in it.
+        <strong>Learning</strong> means exactly that. I would rather you interview me on the first column
+        than catch me out on the third.
+      </p>
+      <div class="caps" id="caps"></div>
+    </section>
+
+    <!-- ---------------- CONTACT ---------------- -->
+    <section class="panel" role="tabpanel" id="panel-about" aria-labelledby="tab-about" tabindex="-1" hidden>
+      <h2 class="h">Contact</h2>
+      <p class="sub" id="about-status"></p>
+
+      <div class="links" id="about-links" style="margin-bottom:2.5rem"></div>
+
+      <h3 class="h">Field Notes</h3>
+      <p class="sub">Short entries. Mostly so you can see this site is not frozen at the moment I submitted an application.</p>
+      <ul class="notes" id="notes"></ul>
+
+      <h3 class="h" style="margin-top:2.5rem">Disclosure Ethics</h3>
+      <p class="sub" style="max-width:70ch">
+        Everything accomplished above was done within my own systems without compromising
+        any external devices, participating in illegal activities, or with malicious
+        intent. All findings get reported to the developer or maintainer first, and any
+        further testing I do afterwards stays private and is only for documentation. It
+        all stays redacted until a patch is deployed for the vulnerability, or until the
+        developer or maintainer gives me permission to publish.
+      </p>
+    </section>
+
+  </main>
+
+  <footer class="foot">
+    <span id="foot-left">Kevin Le · @banyourself</span>
+    <span>Hand-built. No template, no site generator.</span>
+    <span id="foot-updated"></span>
+  </footer>
+
+</div>
+
+<!-- toast -->
+<div id="toast" role="status" aria-live="polite">
+  <span class="icon" aria-hidden="true"></span>
+  <span><span id="toast-kind">Advancement Made!</span><b id="toast-name">Minecraft Mode</b></span>
+</div>
+
+<script src="assets/js/casefiles.js"></script>
+<script src="assets/js/app.js"></script>
+<script src="assets/js/ambient.js"></script>
+</body>
+</html>
