@@ -169,13 +169,13 @@ const CASES = [
     findings: [
 
       {
-        ref: "MC-001-01",
+        ref: "MC-PACKET-01",
         severity: "critical",
         redacted: false,
         mod: "ChunkPregenerator",
         version: "2.5.1",
         cwe: "CWE-862 Missing Authorization",
-        title: "Any client can wipe every entity and tile-entity in an entire dimension",
+        title: "KillWorldRequest - any client can wipe every entity and tile-entity in an entire dimension",
         deployment: {
           headline: { name: "RLCraft", url: "https://www.curseforge.com/minecraft/modpacks/rlcraft", downloads: "50M+", note: "most-downloaded CurseForge modpack" },
           others: [
@@ -212,13 +212,13 @@ const CASES = [
       },
 
       {
-        ref: "MC-001-02",
+        ref: "MC-PACKET-02",
         severity: "critical",
         redacted: false,
         mod: "Trinkets & Baubles",
         version: "0.32.5",
         cwe: "CWE-862 Missing Authorization",
-        title: "Write arbitrary items into any entity's slots, and attack any entity by ID",
+        title: "SyncItemDataPacket - write arbitrary items into any entity's slots, and attack any entity by ID",
         deployment: {
           headline: { name: "RLCraft", url: "https://www.curseforge.com/minecraft/modpacks/rlcraft", downloads: "50M+", note: "most-downloaded CurseForge modpack" },
           others: [
@@ -245,13 +245,13 @@ const CASES = [
       },
 
       {
-        ref: "MC-001-03",
+        ref: "MC-PACKET-03",
         severity: "critical",
         redacted: false,
         mod: "RecurrentComplex",
         version: "1.4.8.4",
         cwe: "CWE-862 Missing Authorization",
-        title: "Ungated packet chains into level-2 command execution on the server",
+        title: "PacketEditTileEntity - ungated packet chains into level-2 command execution on the server",
         deployment: {
           headline: { name: "RLCraft", url: "https://www.curseforge.com/minecraft/modpacks/rlcraft", downloads: "50M+", note: "most-downloaded CurseForge modpack" },
           others: [
@@ -274,13 +274,13 @@ const CASES = [
       },
 
       {
-        ref: "MC-001-04",
+        ref: "MC-PACKET-04",
         severity: "critical",
         redacted: false,
         mod: "Grappling Hook (grapplemod)",
         version: "v12.3",
         cwe: "CWE-862 Missing Authorization",
-        title: "Arbitrary self-teleport and velocity from a client-supplied position",
+        title: "PlayerMovementMessage - arbitrary self-teleport and velocity from a client-supplied position",
         deployment: {
           headline: { name: "RLCraft", url: "https://www.curseforge.com/minecraft/modpacks/rlcraft", downloads: "50M+", note: "most-downloaded CurseForge modpack" },
           others: [
@@ -302,13 +302,13 @@ const CASES = [
       },
 
       {
-        ref: "MC-001-05",
+        ref: "MC-PACKET-05",
         severity: "high",
         redacted: false,
         mod: "NuclearCraft",
         version: "2.19a",
         cwe: "CWE-862 Missing Authorization",
-        title: "EmptyTankPacket: If the tile at a client-chosen BlockPos is an `IMultiblockPart` whose",
+        title: "EmptyTankPacket - if the tile at a client-chosen BlockPos is an `IMultiblockPart` whose",
         packets: [
           { name: "EmptyTankPacket [high]", does: "nc.multiblock.network.ClearAllFluidsPacket$Handler.processMessage \u00b7 channel nuclearcraft", couldDo: "If the tile at a client-chosen BlockPos is an `IMultiblockPart` whose multiblock is `IMultiblockFluid`, calls `multiblock.clearAllFluids()` - drains every fluid tank of an entire multiblock\u2026" },
           { name: "ToggleItemOutputSettingPacket [high]", does: "nc.multiblock.network.ClearAllFluidsPacket$Handler.processMessage \u00b7 channel nuclearcraft", couldDo: "If the tile at a client-chosen BlockPos is an `IMultiblockPart` whose multiblock is `IMultiblockFluid`, calls `multiblock.clearAllFluids()` - drains every fluid tank of an entire multiblock\u2026" },
@@ -337,13 +337,13 @@ const CASES = [
       },
 
       {
-        ref: "MC-001-06",
+        ref: "MC-PACKET-06",
         severity: "high",
         redacted: false,
         mod: "Ice and Fire",
         version: "1.7.1",
         cwe: "CWE-862 Missing Authorization",
-        title: "MessageDragonArmor: looks up the dragon by ID and calls `setArmorInSlot(index, type)` - equipping",
+        title: "MessageDragonArmor - looks up the dragon by ID and calls `setArmorInSlot(index, type)`, equipping",
         packets: [
           { name: "MessageDragonArmor [high]", does: "com.github.alexthe666.iceandfire.message.MessageDragonArmor.onServerReceived \u00b7 channel iceandfire", couldDo: "A client sends a dragonId + armor_index + armor_type." },
           { name: "MessageDragonControl [high]", does: "com.aofex.alexthe666.iceandfire.message.MessageDragonControl.onServerReceive \u00b7 channel iceandfire", couldDo: "A client sends a dragonId + controlState + posX/Y/Z." },
@@ -371,13 +371,13 @@ const CASES = [
       },
 
       {
-        ref: "MC-001-07",
+        ref: "MC-PACKET-07",
         severity: "high",
         redacted: false,
         mod: "Quark",
         version: "r1.6-179",
         cwe: "CWE-862 Missing Authorization",
-        title: "MessageRequestEmote: broadcasts a `MessageDoEmote` to all players and, if",
+        title: "MessageRequestEmote - broadcasts a `MessageDoEmote` to all players and, if",
         packets: [
           { name: "MessageRequestEmote [high]", does: "vazkii.quark.base.network.message.MessageRequestEmote.handleMessage \u00b7 channel autoreglib", couldDo: "A client sends an emoteName." },
           { name: "MessageChangeHotbar [medium]", does: "MessageChangeHotbar.handleMessage \u00b7 channel autoreglib", couldDo: "Client sends a bar index (1-3);" },
@@ -396,13 +396,13 @@ const CASES = [
       },
 
       {
-        ref: "MC-001-08",
+        ref: "MC-PACKET-08",
         severity: "high",
         redacted: false,
         mod: "RebornCore",
         version: "3.19.5",
         cwe: "CWE-862 Missing Authorization",
-        title: "PacketButtonID: looks up the tile at that pos and, if it is a `LogicController`, calls",
+        title: "PacketButtonID - looks up the tile at that pos and, if it is a `LogicController`, calls",
         packets: [
           { name: "PacketButtonID [high]", does: "reborncore.common.logic.PacketButtonID.processData \u00b7 channel rc&reborncore.&<crc5>", couldDo: "A client sends a BlockPos + ID." },
           { name: "PacketConfigSave [high]", does: "reborncore.common.network.packet.PacketConfigSave.processData \u00b7 channel rc&reborncore.&<crc5>", couldDo: "A client sends a BlockPos + NBT slot config." },
@@ -421,13 +421,13 @@ const CASES = [
       },
 
       {
-        ref: "MC-001-09",
+        ref: "MC-PACKET-09",
         severity: "high",
         redacted: false,
         mod: "Reskillable",
         version: "1.13.0",
         cwe: "CWE-862 Missing Authorization",
-        title: "MessageDodge: calls `player.knockBack(0.3f)` on the sender - a dodge impulse",
+        title: "MessageDodge - calls `player.knockBack(0.3f)` on the sender, a dodge impulse",
         packets: [
           { name: "MessageDodge [high]", does: "codersafterdark.reskillable.network.MessageDodge.handleMessage \u00b7 channel reskillable", couldDo: "A client sends an empty MessageDodge." },
           { name: "InvalidateRequirementPacket [high]", does: "codersafterdark.reskillable.network.InvalidateRequirementPacket.handleMessag \u00b7 channel reskillable", couldDo: "A client sends a UUID + cacheTypes." },
@@ -444,13 +444,13 @@ const CASES = [
       },
 
       {
-        ref: "MC-001-10",
+        ref: "MC-PACKET-10",
         severity: "high",
         redacted: false,
         mod: "Varied Commodities",
         version: "1.12.2",
         cwe: "CWE-862 Missing Authorization",
-        title: "TRADE_ACCEPT: The server, if the player is in a `ContainerTradingBlock`, advances the trade",
+        title: "TRADE_ACCEPT - the server, if the player is in a `ContainerTradingBlock`, advances the trade",
         packets: [
           { name: "TRADE_ACCEPT [high]", does: "noppes.vc.PacketHandlerServer.handlePacket \u00b7 channel VC", couldDo: "A client sends a TRADE_ACCEPT packet." },
           { name: "SAVE_SIGN [low]", does: "PacketHandlerServer.handlePacket \u00b7 channel variedcommodities", couldDo: "Client sends a `BlockPos` + text;" },
@@ -466,13 +466,13 @@ const CASES = [
       },
 
       {
-        ref: "MC-001-11",
+        ref: "MC-PACKET-11",
         severity: "high",
         redacted: false,
         mod: "AutoRegLib",
         version: "1.3-32",
         cwe: "CWE-862 Missing Authorization",
-        title: "MessageDropIn: Executes a `DropInHandler.executeDropIn(player, slot, stack)` on the sender's",
+        title: "MessageDropIn - executes a `DropInHandler.executeDropIn(player, slot, stack)` on the sender's",
         packets: [
           { name: "MessageDropIn [high]", does: "vazkii.arl.network.message.MessageDropIn.handleMessage \u00b7 channel autoreglib", couldDo: "Executes a `DropInHandler.executeDropIn(player, slot, stack)` on the sender's server thread with a client-supplied slot index and ItemStack." },
           { name: "TileEntityMessage [low]", does: "vazkii.arl.network.message.TileEntityMessage \u00b7 channel autoreglib", couldDo: "Not actually client-sendable - `TileEntityMessage` is an abstract base class that is never registered itself;" },
@@ -487,13 +487,13 @@ const CASES = [
       },
 
       {
-        ref: "MC-001-12",
+        ref: "MC-PACKET-12",
         severity: "high",
         redacted: false,
         mod: "ItemPhysic",
         version: "1.4.37",
         cwe: "CWE-862 Missing Authorization",
-        title: "DropPacket: sets `EventHandler.Droppower = power` - a global static",
+        title: "DropPacket - sets `EventHandler.Droppower = power`, a global static",
         packets: [
           { name: "DropPacket [high]", does: "com.creativemd.itemphysic.packet.DropPacket.executeServer \u00b7 channel creativemd", couldDo: "A client sends a `power` int." },
           { name: "PickupPacket [high]", does: "com.creativemd.itemphysic.packet.PickupPacket.executeServer \u00b7 channel creativemd", couldDo: "A client sends a UUID + rightClick." },
@@ -508,13 +508,13 @@ const CASES = [
       },
 
       {
-        ref: "MC-001-13",
+        ref: "MC-PACKET-13",
         severity: "high",
         redacted: false,
         mod: "Level Up! 2",
         version: "1.1.23",
         cwe: "CWE-862 Missing Authorization",
-        title: "SkillsPacket: sets the sender's skill levels from client-supplied data and, if",
+        title: "SkillsPacket - sets the sender's skill levels from client-supplied data and, if",
         packets: [
           { name: "SkillsPacket [high]", does: "levelup2.network.SkillPacketHandler.handlePacket \u00b7 channel levelupskills", couldDo: "A client sends a button + levelSpend + skill data." },
           { name: "ClassChangePacket [low]", does: "levelup2.network.SkillPacketHandler.handleClassChange \u00b7 channel levelupclasses", couldDo: "Client picks its own class/specialization (mining/craft/combat bonus)." },
@@ -529,13 +529,13 @@ const CASES = [
       },
 
       {
-        ref: "MC-001-14",
+        ref: "MC-PACKET-14",
         severity: "high",
         redacted: false,
         mod: "RLCombat",
         version: "2.0.8",
         cwe: "CWE-862 Missing Authorization",
-        title: "PacketMainhandAttack: looks up the entity by ID and calls",
+        title: "PacketMainhandAttack - looks up the entity by ID and calls",
         packets: [
           { name: "PacketMainhandAttack [high]", does: "bettercombat.mod.network.PacketMainhandAttack$Handler.handle \u00b7 channel bettercombatmod", couldDo: "A client sends an entityId + motion." },
           { name: "PacketOffhandAttack [high]", does: "bettercombat.mod.network.PacketOffhandAttack$Handler.handle \u00b7 channel bettercombatmod", couldDo: "Same as PacketMainhandAttack but for the offhand - a client sends an entityId + motion and the server attacks that entity by ID with the offhand weapon, with no reach check on the primary t\u2026" },
@@ -550,13 +550,13 @@ const CASES = [
       },
 
       {
-        ref: "MC-001-15",
+        ref: "MC-PACKET-15",
         severity: "high",
         redacted: false,
         mod: "SpartanWeaponry",
         version: "1.5.3",
         cwe: "CWE-862 Missing Authorization",
-        title: "PacketLongReachAttack: looks up the entity by ID, checks the sender's mainhand weapon has a \"reach\"",
+        title: "PacketLongReachAttack - looks up the entity by ID, checks the sender's mainhand weapon has a \"reach\"",
         packets: [
           { name: "PacketLongReachAttack [high]", does: "com.oblivioussp.spartanweaponry.network.PacketLongReachAttack.handleServerSi \u00b7 channel spartanweaponry", couldDo: "A client sends an entityId + velocity." },
           { name: "PacketKeyHandle [medium]", does: "PacketKeyHandle.handle \u00b7 channel spartanweaponry", couldDo: "Client opens the quiver GUI for the sender's own quiver (hotbar or bauble slot)." },
@@ -571,13 +571,13 @@ const CASES = [
       },
 
       {
-        ref: "MC-001-16",
+        ref: "MC-PACKET-16",
         severity: "high",
         redacted: false,
         mod: "CollisionDamage",
         version: "1.2.2",
         cwe: "CWE-862 Missing Authorization",
-        title: "PacketCollisionS: If `accel > server.accelerationThreshold`, the server applies `damageValue`",
+        title: "PacketCollisionS - if `accel > server.accelerationThreshold`, the server applies `damageValue`",
         packets: [
           { name: "PacketCollisionS [high]", does: "collision.packets.PacketCollisionS$CollisionMessageHandler.onMessage \u00b7 channel collisiondamage", couldDo: "A client sends an `accel` double." },
         ],
@@ -591,13 +591,13 @@ const CASES = [
       },
 
       {
-        ref: "MC-001-17",
+        ref: "MC-PACKET-17",
         severity: "high",
         redacted: false,
         mod: "ElenaiDodge",
         version: "2.1",
         cwe: "CWE-862 Missing Authorization",
-        title: "SDodgeMessage: posts a `DodgeEvent.ServerDodgeEvent` and, if not cancelled, calls",
+        title: "SDodgeMessage - posts a `DodgeEvent.ServerDodgeEvent` and, if not cancelled, calls",
         packets: [
           { name: "SDodgeMessage [high]", does: "com.elenai.elenaidodge.network.message.SDodgeMessage$Handler.onMessage \u00b7 channel elenaidodge", couldDo: "A client sends a `dir` string and `cooldown` int." },
         ],
@@ -611,13 +611,13 @@ const CASES = [
       },
 
       {
-        ref: "MC-001-18",
+        ref: "MC-PACKET-18",
         severity: "high",
         redacted: false,
         mod: "FantasticLib",
         version: "1.12.2.047",
         cwe: "CWE-862 Missing Authorization",
-        title: "ControlEventPacket: posts it on the Forge event bus with the sender as the player",
+        title: "ControlEventPacket - posts it on the Forge event bus with the sender as the player",
         packets: [
           { name: "ControlEventPacket [high]", does: "com.fantasticsource.mctools.Network$ControlEventPacketHandler.onMessage \u00b7 channel fantasticlib", couldDo: "A client sends a `ControlEvent` (name, state, lastState, identifier)." },
         ],
@@ -631,13 +631,13 @@ const CASES = [
       },
 
       {
-        ref: "MC-001-19",
+        ref: "MC-PACKET-19",
         severity: "high",
         redacted: false,
         mod: "Fish's Undead Rising",
         version: "1.4.2",
         cwe: "CWE-862 Missing Authorization",
-        title: "PacketMountSpecial: A client can fire 8 fireballs from any entity",
+        title: "PacketMountSpecial - a client can fire 8 fireballs from any entity",
         packets: [
           { name: "PacketMountSpecial [high]", does: "com.Fishmod.mod_LavaCow.message.PacketMountSpecial.onMessage \u00b7 channel mod_lavacow", couldDo: "Looks up any entity by client-supplied entity ID (`world.func_73045_a(message.Id)`), then spawns 8 `EntitySmallFireball`s from that entity aimed along its look vector, plus plays a sound." },
         ],
@@ -651,13 +651,13 @@ const CASES = [
       },
 
       {
-        ref: "MC-001-20",
+        ref: "MC-PACKET-20",
         severity: "high",
         redacted: false,
         mod: "InventoryTweaks",
         version: "1.64",
         cwe: "CWE-862 Missing Authorization",
-        title: "ITPacketClick: calls `container.slotClick(slot, data, action, player)` on the sender's open",
+        title: "ITPacketClick - calls `container.slotClick(slot, data, action, player)` on the sender's open",
         packets: [
           { name: "ITPacketClick [high]", does: "invtweaks.network.packets.ITPacketClick.handle \u00b7 channel InventoryTweaks", couldDo: "A client sends a slot + data + ClickType + window." },
         ],
@@ -671,13 +671,13 @@ const CASES = [
       },
 
       {
-        ref: "MC-001-21",
+        ref: "MC-PACKET-21",
         severity: "high",
         redacted: false,
         mod: "MultiMine",
         version: "1.12.2",
         cwe: "CWE-862 Missing Authorization",
-        title: "PartialBlockPacket: looks up the player by username and calls",
+        title: "PartialBlockPacket - looks up the player by username and calls",
         packets: [
           { name: "PartialBlockPacket [high]", does: "atomicstryker.multimine.common.network.PartialBlockPacket$ScheduledCode.run \u00b7 channel AS_MM", couldDo: "A client sends a username + x,y,z + value + regenerating." },
         ],
@@ -691,13 +691,13 @@ const CASES = [
       },
 
       {
-        ref: "MC-001-22",
+        ref: "MC-PACKET-22",
         severity: "high",
         redacted: false,
         mod: "PotionCore",
         version: "1.9",
         cwe: "CWE-862 Missing Authorization",
-        title: "CToSMessage: type 2 (`USE_ENTITY`) calls `useEntity(player, buff)` which can",
+        title: "CToSMessage - type 2 (`USE_ENTITY`) calls `useEntity(player, buff)` which can",
         packets: [
           { name: "CToSMessage [high]", does: "com.tmtravlr.potioncore.network.PacketHandlerServer.onMessage \u00b7 channel potioncore", couldDo: "A client sends a raw byte payload with a type discriminator." },
         ],
@@ -711,13 +711,13 @@ const CASES = [
       },
 
       {
-        ref: "MC-001-23",
+        ref: "MC-PACKET-23",
         severity: "high",
         redacted: false,
         mod: "QualityTools",
         version: "1.0.7",
         cwe: "CWE-862 Missing Authorization",
-        title: "CToSMessage: A client sends a type discriminator + BlockPos + dimension",
+        title: "CToSMessage - a client sends a type discriminator + BlockPos + dimension",
         packets: [
           { name: "CToSMessage [high]", does: "com.tmtravlr.qualitytools.network.PacketHandlerServer.onMessage \u00b7 channel qualitytools", couldDo: "A client sends a type discriminator + BlockPos + dimension." },
         ],
@@ -731,13 +731,13 @@ const CASES = [
       },
 
       {
-        ref: "MC-001-24",
+        ref: "MC-PACKET-24",
         severity: "high",
         redacted: false,
         mod: "RLArtifacts",
         version: "1.1.2",
         cwe: "CWE-862 Missing Authorization",
-        title: "PacketBottledCloudJump: zeroes the sender's vertical velocity and spawns cloud particles",
+        title: "PacketBottledCloudJump - zeroes the sender's vertical velocity and spawns cloud particles",
         packets: [
           { name: "PacketBottledCloudJump [high]", does: "artifacts.common.network.PacketBottledCloudJump$PacketHandler.onMessage \u00b7 channel artifacts", couldDo: "A client sends an isFart boolean." },
         ],
@@ -751,13 +751,13 @@ const CASES = [
       },
 
       {
-        ref: "MC-001-25",
+        ref: "MC-PACKET-25",
         severity: "high",
         redacted: false,
         mod: "SimpleDifficulty",
         version: "0.3.9",
         cwe: "CWE-862 Missing Authorization",
-        title: "MessageConfigLAN: On a LAN/integrated server, the server calls",
+        title: "MessageConfigLAN - on a LAN/integrated server, the server calls",
         packets: [
           { name: "MessageConfigLAN [high]", does: "com.charles445.simpledifficulty.network.MessageConfigLAN$Handler.onMessage \u00b7 channel simpledifficulty", couldDo: "A client sends an empty MessageConfigLAN." },
         ],
@@ -771,13 +771,13 @@ const CASES = [
       },
 
       {
-        ref: "MC-001-26",
+        ref: "MC-PACKET-26",
         severity: "high",
         redacted: false,
         mod: "WolfArmorAndStorage",
         version: "3.8.1",
         cwe: "CWE-862 Missing Authorization",
-        title: "WolfDropChestMessage: looks up the entity by ID and, if it is an `IArmoredWolf`, calls `dropChest()`",
+        title: "WolfDropChestMessage - looks up the entity by ID and, if it is an `IArmoredWolf`, calls `dropChest()`",
         packets: [
           { name: "WolfDropChestMessage [high]", does: "dev.satyrn.wolfarmor.common.network.packets.WolfDropChestMessage.process \u00b7 channel wolfarmor", couldDo: "A client sends an entityId." },
         ],
@@ -791,13 +791,13 @@ const CASES = [
       },
 
       {
-        ref: "MC-001-27",
+        ref: "MC-PACKET-27",
         severity: "medium",
         redacted: false,
         mod: "Lycanites Mobs",
         version: "2.0.8.9",
         cwe: "CWE-862 Missing Authorization",
-        title: "MessagePlayerAttack: server calls `playerExt.meleeAttack(entity)` on any entity by ID",
+        title: "MessagePlayerAttack - server calls `playerExt.meleeAttack(entity)` on any entity by ID",
         packets: [
           { name: "MessagePlayerAttack [medium]", does: "MessagePlayerAttack.onMessage \u00b7 channel lycanitesmobs", couldDo: "Client sends an entity ID;" },
           { name: "MessagePlayerControl [medium]", does: "MessagePlayerControl.onMessage \u00b7 channel lycanitesmobs", couldDo: "Client sends a byte of control states;" },
@@ -831,13 +831,13 @@ const CASES = [
       },
 
       {
-        ref: "MC-001-28",
+        ref: "MC-PACKET-28",
         severity: "medium",
         redacted: false,
         mod: "SRParasites",
         version: "1.9.11",
         cwe: "CWE-862 Missing Authorization",
-        title: "SRPPacketMeleeRange: server attacks any entity by ID if the sender holds an `IHaveReach` weapon",
+        title: "SRPPacketMeleeRange - server attacks any entity by ID if the sender holds an `IHaveReach` weapon",
         packets: [
           { name: "SRPPacketMeleeRange [medium]", does: "SRPPacketMeleeRange.Handler.onMessage \u00b7 channel SRParasites", couldDo: "Client sends an entity ID;" },
           { name: "SRPPacketEntityBodyHit [medium]", does: "SRPPacketEntityBodyHit.Handler \u00b7 channel SRParasites", couldDo: "Client sends a target ID + part ID;" },
@@ -857,13 +857,13 @@ const CASES = [
       },
 
       {
-        ref: "MC-001-29",
+        ref: "MC-PACKET-29",
         severity: "medium",
         redacted: false,
         mod: "Quark R1.6-179",
         version: "",
         cwe: "CWE-862 Missing Authorization",
-        title: "MessageRequestPassengerChest: Client requests the chest-inventory of a `EntityChestPassenger` riding",
+        title: "MessageRequestPassengerChest - client requests the chest-inventory of a `EntityChestPassenger` riding",
         packets: [
           { name: "MessageRequestPassengerChest [medium]", does: "MessageRequestPassengerChest.handleMessage \u00b7 channel autoreglib", couldDo: "Client requests the chest-inventory of a `EntityChestPassenger` riding the sender's boat." },
           { name: "MessageRestock [medium]", does: "MessageRestock.handleMessage \u00b7 channel autoreglib", couldDo: "Client triggers a restock of the player's inventory from nearby chests." },
@@ -879,13 +879,13 @@ const CASES = [
       },
 
       {
-        ref: "MC-001-30",
+        ref: "MC-PACKET-30",
         severity: "medium",
         redacted: false,
         mod: "CarbonConfig",
         version: "2.0.2.1",
         cwe: "CWE-862 Missing Authorization",
-        title: "SyncPacket: Same as `SyncPacket` but for a batch of config entries - deserializes",
+        title: "SyncPacket - same as `SyncPacket` but for a batch of config entries, deserializes",
         packets: [
           { name: "SyncPacket [medium]", does: "BulkSyncPacket \u00b7 channel carbonconfig:networking", couldDo: "Same as `SyncPacket` but for a batch of config entries - deserializes client-supplied config entries into a named config and saves it, with no op/permission check." },
           { name: "BulkSyncPacket [medium]", does: "BulkSyncPacket \u00b7 channel carbonconfig:networking", couldDo: "Same as `SyncPacket` but for a batch of config entries - deserializes client-supplied config entries into a named config and saves it, with no op/permission check." },
@@ -900,13 +900,13 @@ const CASES = [
       },
 
       {
-        ref: "MC-001-31",
+        ref: "MC-PACKET-31",
         severity: "medium",
         redacted: false,
         mod: "firstaid",
         version: "1.6.22",
         cwe: "CWE-862 Missing Authorization",
-        title: "MessageApplyHealingItem: server consumes one item from that hand and sets it as the active healer",
+        title: "MessageApplyHealingItem - server consumes one item from that hand and sets it as the active healer",
         packets: [
           { name: "MessageApplyHealingItem [medium]", does: "MessageApplyHealingItem.Handler.onMessage \u00b7 channel firstaid", couldDo: "Client picks a body part + hand;" },
           { name: "MessageClientRequest [medium]", does: "MessageClientRequest.Handler.onMessage \u00b7 channel firstaid", couldDo: "Client sends a `Type` byte." },
@@ -921,13 +921,13 @@ const CASES = [
       },
 
       {
-        ref: "MC-001-32",
+        ref: "MC-PACKET-32",
         severity: "medium",
         redacted: false,
         mod: "Waystones",
         version: "4.1.0",
         cwe: "CWE-862 Missing Authorization",
-        title: "MessageRemoveWaystone: server removes that waystone from the sender's own waystone list",
+        title: "MessageRemoveWaystone - server removes that waystone from the sender's own waystone list",
         packets: [
           { name: "MessageRemoveWaystone [medium]", does: "HandlerRemoveWaystone.onMessage \u00b7 channel waystones", couldDo: "Client sends an index;" },
           { name: "MessageSortWaystone [medium]", does: "HandlerSortWaystone.onMessage \u00b7 channel waystones", couldDo: "Client sends two indices;" },
@@ -942,13 +942,13 @@ const CASES = [
       },
 
       {
-        ref: "MC-001-33",
+        ref: "MC-PACKET-33",
         severity: "medium",
         redacted: false,
         mod: "Antique Atlas Auto Marker",
         version: "1.4.3",
         cwe: "CWE-862 Missing Authorization",
-        title: "AddedStructureMarkersPacket: Takes a client-supplied `atlasID`, `dimension`, and a list of `Marker`s",
+        title: "AddedStructureMarkersPacket - takes a client-supplied `atlasID`, `dimension`, and a list of `Marker`s",
         packets: [
           { name: "AddedStructureMarkersPacket [medium]", does: "antiqueatlasautomarker.structuremarkers.network.AddedStructureMarkersPacket. \u00b7 channel antiqueatlas", couldDo: "Takes a client-supplied `atlasID`, `dimension`, and a list of `Marker`s (id, type, label, x, z, visibleAhead) and calls `MarkersData.loadMarker(marker)` on the server's atlas data for that \u2026" },
         ],
@@ -962,13 +962,13 @@ const CASES = [
       },
 
       {
-        ref: "MC-001-34",
+        ref: "MC-PACKET-34",
         severity: "medium",
         redacted: false,
         mod: "FishingMadeBetter",
         version: "2.2.6",
         cwe: "CWE-862 Missing Authorization",
-        title: "PacketKeybindS: Client sets its own fishing keybind (REEL_IN / REEL_OUT) while fishing",
+        title: "PacketKeybindS - client sets its own fishing keybind (REEL_IN / REEL_OUT) while fishing",
         packets: [
           { name: "PacketKeybindS [medium]", does: "PacketKeybindS.KeybindMessageHandler.onMessage \u00b7 channel fishingmadebetter", couldDo: "Client sets its own fishing keybind (REEL_IN / REEL_OUT) while fishing." },
         ],
@@ -982,13 +982,13 @@ const CASES = [
       },
 
       {
-        ref: "MC-001-35",
+        ref: "MC-PACKET-35",
         severity: "medium",
         redacted: false,
         mod: "InfernalMobs",
         version: "1.12.2",
         cwe: "CWE-862 Missing Authorization",
-        title: "MobModsPacket: the server looks up the entity's infernal modifier and replies",
+        title: "MobModsPacket - looks up the entity's infernal modifier and replies",
         packets: [
           { name: "MobModsPacket [medium]", does: "MobModsPacket.ScheduledCode.run \u00b7 channel AS_IF", couldDo: "Client sends an entity ID;" },
         ],
@@ -1002,13 +1002,13 @@ const CASES = [
       },
 
       {
-        ref: "MC-001-36",
+        ref: "MC-PACKET-36",
         severity: "medium",
         redacted: false,
         mod: "librarianlib",
         version: "4.22",
         cwe: "CWE-862 Missing Authorization",
-        title: "PacketSyncSlotVisibility: the server applies it to the slots of the sender's open librarianlib",
+        title: "PacketSyncSlotVisibility - applies it to the slots of the sender's open librarianlib",
         packets: [
           { name: "PacketSyncSlotVisibility [medium]", does: "PacketSyncSlotVisibility.handle \u00b7 channel librarianlib", couldDo: "Client sends a `boolean[]` visibility mask;" },
         ],
@@ -1022,13 +1022,13 @@ const CASES = [
       },
 
       {
-        ref: "MC-001-37",
+        ref: "MC-PACKET-37",
         severity: "medium",
         redacted: false,
         mod: "Mantle",
         version: "1.12-1.3.3.55",
         cwe: "CWE-862 Missing Authorization",
-        title: "PacketUpdateSavedPage: server writes it as a saved-page NBT tag onto the book held in the sender's",
+        title: "PacketUpdateSavedPage - server writes it as a saved-page NBT tag onto the book held in the sender's",
         packets: [
           { name: "PacketUpdateSavedPage [medium]", does: "PacketUpdateSavedPage.handleServer \u00b7 channel mantle:books", couldDo: "Client sends a page name;" },
         ],
@@ -1042,13 +1042,13 @@ const CASES = [
       },
 
       {
-        ref: "MC-001-38",
+        ref: "MC-PACKET-38",
         severity: "medium",
         redacted: false,
         mod: "Painting Select GUI",
         version: "1.1.0.1",
         cwe: "CWE-862 Missing Authorization",
-        title: "SPacketPainting: Looks up any entity by client-supplied entity ID",
+        title: "SPacketPainting - looks up any entity by client-supplied entity ID",
         packets: [
           { name: "SPacketPainting [medium]", does: "com.mcf.davidee.paintinggui.packet.SPacketPainting$SPaintingMessageHandler.h \u00b7 channel Paint_Select_Gui", couldDo: "Looks up any entity by client-supplied entity ID (`player.world.func_73045_a(packet.id)`);" },
         ],
@@ -1062,13 +1062,13 @@ const CASES = [
       },
 
       {
-        ref: "MC-001-39",
+        ref: "MC-PACKET-39",
         severity: "medium",
         redacted: false,
         mod: "SpartanShields",
         version: "1.5.5",
         cwe: "CWE-862 Missing Authorization",
-        title: "PacketShieldBash: server performs a shield bash on any entity by ID - knockback + 1.0 damage, no",
+        title: "PacketShieldBash - server performs a shield bash on any entity by ID, knockback + 1.0 damage, no",
         packets: [
           { name: "PacketShieldBash [medium]", does: "PacketShieldBash.handleServerSide \u00b7 channel spartanshields", couldDo: "Client sends a hand + entity ID + attack flag;" },
         ],
@@ -1082,13 +1082,13 @@ const CASES = [
       },
 
       {
-        ref: "MC-001-40",
+        ref: "MC-PACKET-40",
         severity: "low",
         redacted: false,
         mod: "BetterQuesting",
         version: "3.5.329",
         cwe: "CWE-862 Missing Authorization",
-        title: "quest_action: claims rewards or runs `detect()` on the named quests",
+        title: "quest_action - claims rewards or runs `detect()` on the named quests",
         packets: [
           { name: "quest_action [low]", does: "NetQuestAction.onServer \u00b7 channel BQ_NET_CHAN", couldDo: "Client sends `action` (0=claim, 1=detect) plus an array of `questIDs`." },
           { name: "quest_sync [low]", does: "NetQuestSync.onServer \u00b7 channel BQ_NET_CHAN", couldDo: "Client requests quest config/progress sync for a set of quest IDs." },
@@ -1107,13 +1107,13 @@ const CASES = [
       },
 
       {
-        ref: "MC-001-41",
+        ref: "MC-PACKET-41",
         severity: "low",
         redacted: false,
         mod: "Dynamic Surroundings",
         version: "3.6.2.1",
         cwe: "CWE-862 Missing Authorization",
-        title: "PacketEntityData: `Side.CLIENT` (server\u2192client, disc 3) - NOT client-sendable",
+        title: "PacketEntityData - `Side.CLIENT` (server\u2192client, disc 3), NOT client-sendable",
         packets: [
           { name: "PacketEntityData [low]", does: "PacketEntityData.PacketHandler.onMessage \u00b7 channel dsurround", couldDo: "`Side.CLIENT` (server\u2192client, disc 3) - NOT client-sendable." },
           { name: "PacketEnvironment [low]", does: "PacketEnvironment.PacketHandler.onMessage \u00b7 channel dsurround", couldDo: "`Side.CLIENT` (disc 5) - NOT client-sendable." },
@@ -1132,13 +1132,13 @@ const CASES = [
       },
 
       {
-        ref: "MC-001-42",
+        ref: "MC-PACKET-42",
         severity: "low",
         redacted: false,
         mod: "Grappling Hook",
         version: "v12.3",
         cwe: "CWE-862 Missing Authorization",
-        title: "GrappleAttachMessage: Server\u2192client only: tells the client to attach a grapple arrow to a position",
+        title: "GrappleAttachMessage - server\u2192client only: tells the client to attach a grapple arrow to a position",
         packets: [
           { name: "GrappleAttachMessage [low]", does: "GrappleAttachMessage.Handler.onMessage \u00b7 channel grapplemodchannel", couldDo: "Not actually client-sendable - registered `Side.CLIENT` (`grapplemod.java:342`)." },
           { name: "GrappleDetachMessage [low]", does: "GrappleDetachMessage.Handler.onMessage \u00b7 channel grapplemodchannel", couldDo: "Not actually client-sendable (Side.CLIENT, `grapplemod.java:348`)." },
@@ -1157,13 +1157,13 @@ const CASES = [
       },
 
       {
-        ref: "MC-001-43",
+        ref: "MC-PACKET-43",
         severity: "low",
         redacted: false,
         mod: "Antique Atlas",
         version: "4.6.3",
         cwe: "CWE-862 Missing Authorization",
-        title: "RegisterTileIdPacket: the server calls `ExtTileIdMap.instance().getOrCreatePseudoBiomeID(name)`",
+        title: "RegisterTileIdPacket - calls `ExtTileIdMap.instance().getOrCreatePseudoBiomeID(name)`",
         packets: [
           { name: "RegisterTileIdPacket [low]", does: "RegisterTileIdPacket.process \u00b7 channel antiqueatlas", couldDo: "Client sends an arbitrary tile-name string;" },
           { name: "AddMarkerPacket [low]", does: "AddMarkerPacket.process \u00b7 channel antiqueatlas", couldDo: "Creates a marker on the sender's atlas at a client-supplied position and broadcasts a `MarkersPacket` to all players." },
@@ -1181,13 +1181,13 @@ const CASES = [
       },
 
       {
-        ref: "MC-001-44",
+        ref: "MC-PACKET-44",
         severity: "low",
         redacted: false,
         mod: "ScalingHealth",
         version: "1.3.42",
         cwe: "CWE-862 Missing Authorization",
-        title: "MessageDataSync: client-boundary",
+        title: "MessageDataSync - client-boundary",
         packets: [
           { name: "MessageDataSync [low]", does: "MessageDataSync.handleMessage \u00b7 channel scalinghealth", couldDo: "client-boundary." },
           { name: "MessageDebugData [low]", does: "MessageDebugData.handleMessage \u00b7 channel scalinghealth", couldDo: "client-boundary." },
@@ -1205,13 +1205,13 @@ const CASES = [
       },
 
       {
-        ref: "MC-001-45",
+        ref: "MC-PACKET-45",
         severity: "low",
         redacted: false,
         mod: "iChunUtil",
         version: "7.2.2",
         cwe: "CWE-862 Missing Authorization",
-        title: "PacketEntityLocation: Not actually live in this pack - the `iChun_WorldPortals` channel is only",
+        title: "PacketEntityLocation - not actually live in this pack, the `iChun_WorldPortals` channel is only",
         packets: [
           { name: "PacketEntityLocation [low]", does: "me.ichun.mods.ichunutil.common.module.worldportals.common.packet.PacketEntit \u00b7 channel iChun_WorldPortals", couldDo: "Not actually live in this pack - the `iChun_WorldPortals` channel is only created if some mod calls the WorldPortals API, and no in-pack caller was found (reconcile \u00a73)." },
           { name: "PacketRequestBlockEntityData [low]", does: "me.ichun.mods.ichunutil.common.packet.mod.PacketRequestBlockEntityData.execu \u00b7 channel ichunutil", couldDo: "Read-only info request." },
@@ -1228,13 +1228,13 @@ const CASES = [
       },
 
       {
-        ref: "MC-001-46",
+        ref: "MC-PACKET-46",
         severity: "low",
         redacted: false,
         mod: "EnhancedVisuals",
         version: "1.4.4",
         cwe: "CWE-862 Missing Authorization",
-        title: "DamagePacket: `executeServer` is a no-op, so a client-sent DamagePacket has no server",
+        title: "DamagePacket - `executeServer` is a no-op, so a client-sent DamagePacket has no server",
         packets: [
           { name: "DamagePacket [low]", does: "team.creative.enhancedvisuals.common.packet.DamagePacket.executeClient \u00b7 channel creativemd", couldDo: "Client-bound visual packet." },
           { name: "ExplosionPacket [low]", does: "team.creative.enhancedvisuals.common.packet.ExplosionPacket.executeClient \u00b7 channel creativemd", couldDo: "Client-bound visual packet." },
@@ -1250,13 +1250,13 @@ const CASES = [
       },
 
       {
-        ref: "MC-001-47",
+        ref: "MC-PACKET-47",
         severity: "low",
         redacted: false,
         mod: "Inspirations",
         version: "0.2.9",
         cwe: "CWE-862 Missing Authorization",
-        title: "InventorySlotSyncPacket: `Side.CLIENT` (`registerPacketClient`, `InspirationsNetwork.java:43`) - NOT",
+        title: "InventorySlotSyncPacket - `Side.CLIENT` (`registerPacketClient`, `InspirationsNetwork.java:43`), NOT",
         packets: [
           { name: "InventorySlotSyncPacket [low]", does: "InventorySlotSyncPacket.handleClientSafe \u00b7 channel inspirations", couldDo: "`Side.CLIENT` (`registerPacketClient`, `InspirationsNetwork.java:43`) - NOT client-sendable." },
           { name: "MilkablePacket [low]", does: "MilkablePacket.handleClientSafe \u00b7 channel inspirations", couldDo: "`Side.CLIENT` - NOT client-sendable." },
@@ -1272,13 +1272,13 @@ const CASES = [
       },
 
       {
-        ref: "MC-001-48",
+        ref: "MC-PACKET-48",
         severity: "low",
         redacted: false,
         mod: "Standard Expansion",
         version: "3.4.173",
         cwe: "CWE-862 Missing Authorization",
-        title: "task_checkbox: the server marks the task complete if it is a `TaskCheckbox`",
+        title: "task_checkbox - marks the task complete if it is a `TaskCheckbox`",
         packets: [
           { name: "task_checkbox [low]", does: "NetTaskCheckbox.onServer \u00b7 channel BQ_STANDARD", couldDo: "Client sends `questID`/`taskID`;" },
           { name: "task_interact [low]", does: "NetTaskInteract.onServer \u00b7 channel BQ_STANDARD", couldDo: "Client sends `isMainHand`/`isHit`;" },
@@ -1294,13 +1294,13 @@ const CASES = [
       },
 
       {
-        ref: "MC-001-49",
+        ref: "MC-PACKET-49",
         severity: "low",
         redacted: false,
         mod: "Baubles",
         version: "1.5.2",
         cwe: "CWE-862 Missing Authorization",
-        title: "PacketOpenBaublesInventory: `Side.SERVER` (disc 0)",
+        title: "PacketOpenBaublesInventory - `Side.SERVER` (disc 0)",
         packets: [
           { name: "PacketOpenBaublesInventory [low]", does: "PacketOpenBaublesInventory.onMessage \u00b7 channel baubles", couldDo: "`Side.SERVER` (disc 0)." },
           { name: "PacketOpenNormalInventory [low]", does: "PacketOpenNormalInventory.onMessage \u00b7 channel baubles", couldDo: "`Side.SERVER` (disc 1)." },
@@ -1315,13 +1315,13 @@ const CASES = [
       },
 
       {
-        ref: "MC-001-50",
+        ref: "MC-PACKET-50",
         severity: "low",
         redacted: false,
         mod: "Classy Hats",
         version: "1.6.0",
         cwe: "CWE-862 Missing Authorization",
-        title: "PacketHatGuiOpen: Opens the hat GUI for the sender with a client-supplied `target` int",
+        title: "PacketHatGuiOpen - opens the hat GUI for the sender with a client-supplied `target` int",
         packets: [
           { name: "PacketHatGuiOpen [low]", does: "PacketHatGuiOpen.handle \u00b7 channel classyhats", couldDo: "Opens the hat GUI for the sender with a client-supplied `target` int." },
           { name: "PacketSyncLastSelectedSection [low]", does: "PacketSyncLastSelectedSection.handle \u00b7 channel classyhats", couldDo: "Sets the sender's `CapabilityHatContainer` current-hat-section to a client int." },
@@ -1336,13 +1336,13 @@ const CASES = [
       },
 
       {
-        ref: "MC-001-51",
+        ref: "MC-PACKET-51",
         severity: "low",
         redacted: false,
         mod: "IvToolkit",
         version: "1.3.3",
         cwe: "CWE-862 Missing Authorization",
-        title: "PacketGuiAction: Not actually client-sendable in this pack - IvToolkit itself registers NO",
+        title: "PacketGuiAction - not actually client-sendable in this pack, IvToolkit itself registers NO",
         packets: [
           { name: "PacketGuiAction [low]", does: "ivorius.ivtoolkit.network.PacketGuiAction \u00b7 channel none, IvToolkit registers none", couldDo: "Not actually client-sendable in this pack - IvToolkit itself registers NO network channel, and no mod in the pack registers `PacketGuiAction` on its own wrapper." },
           { name: "PacketTileEntityClientEvent [low]", does: "ivorius.ivtoolkit.network.PacketTileEntityClientEvent \u00b7 channel none, IvToolkit registers none", couldDo: "Not client-sendable in this pack - same as PacketGuiAction, library-only with no in-pack registration." },
@@ -1357,13 +1357,13 @@ const CASES = [
       },
 
       {
-        ref: "MC-001-52",
+        ref: "MC-PACKET-52",
         severity: "low",
         redacted: false,
         mod: "MmmMmmMmmMmm",
         version: "1.14",
         cwe: "CWE-862 Missing Authorization",
-        title: "DamageMessage: client-boundary",
+        title: "DamageMessage - client-boundary",
         packets: [
           { name: "DamageMessage [low]", does: "DamageMessage.MessageHandlerClient.onMessage \u00b7 channel TestDummy", couldDo: "client-boundary." },
           { name: "SyncEquipmentMessage [low]", does: "SyncEquipmentMessage.MessageHandlerClient.onMessage \u00b7 channel TestDummy", couldDo: "client-boundary." },
@@ -1378,13 +1378,13 @@ const CASES = [
       },
 
       {
-        ref: "MC-001-53",
+        ref: "MC-PACKET-53",
         severity: "low",
         redacted: false,
         mod: "MoBends",
         version: "1.2.1",
         cwe: "CWE-862 Missing Authorization",
-        title: "MessageViewRequest: Per reconcile.md \u00a710, `Core.java:42-43` registers exactly two messages:",
+        title: "MessageViewRequest - per reconcile.md \u00a710, `Core.java:42-43` registers exactly two messages:",
         packets: [
           { name: "MessageViewRequest [low]", does: "- does NOT exist \u00b7 channel mobends", couldDo: "This packet does not exist." },
           { name: "MessageConfigResponse [low]", does: "MessageConfigResponse.Handler.onMessage \u00b7 channel mobends", couldDo: "`Side.CLIENT` (server\u2192client only) - not client-sendable." },
@@ -1399,13 +1399,13 @@ const CASES = [
       },
 
       {
-        ref: "MC-001-54",
+        ref: "MC-PACKET-54",
         severity: "low",
         redacted: false,
         mod: "Rustic",
         version: "1.1.7",
         cwe: "CWE-862 Missing Authorization",
-        title: "MessageDismountChair: `Side.SERVER` (disc 2)",
+        title: "MessageDismountChair - `Side.SERVER` (disc 2)",
         packets: [
           { name: "MessageDismountChair [low]", does: "MessageDismountChair.MessageHolder.onMessage \u00b7 channel rustic", couldDo: "`Side.SERVER` (disc 2)." },
           { name: "MessageVaseMeta [low]", does: "MessageVaseMeta.MessageHolder.onMessage \u00b7 channel rustic", couldDo: "`Side.SERVER` (disc 1)." },
@@ -1420,13 +1420,13 @@ const CASES = [
       },
 
       {
-        ref: "MC-001-55",
+        ref: "MC-PACKET-55",
         severity: "low",
         redacted: false,
         mod: "Serene Seasons",
         version: "1.2.18",
         cwe: "CWE-862 Missing Authorization",
-        title: "MessageSyncConfigs: `Side.CLIENT` (disc 4) - NOT client-sendable",
+        title: "MessageSyncConfigs - `Side.CLIENT` (disc 4), NOT client-sendable",
         packets: [
           { name: "MessageSyncConfigs [low]", does: "MessageSyncConfigs.onMessage \u00b7 channel sereneseasons", couldDo: "`Side.CLIENT` (disc 4) - NOT client-sendable." },
           { name: "MessageSyncSeasonCycle [low]", does: "MessageSyncSeasonCycle.onMessage \u00b7 channel sereneseasons", couldDo: "" },
@@ -1441,13 +1441,13 @@ const CASES = [
       },
 
       {
-        ref: "MC-001-56",
+        ref: "MC-PACKET-56",
         severity: "low",
         redacted: false,
         mod: "Callable Horses",
         version: "1.1.1",
         cwe: "CWE-862 Missing Authorization",
-        title: "PressKeyPacket: `Side.SERVER` (disc 0)",
+        title: "PressKeyPacket - `Side.SERVER` (disc 0)",
         packets: [
           { name: "PressKeyPacket [low]", does: "PressKeyPacket.onMessage \u00b7 channel CallableHorses", couldDo: "`Side.SERVER` (disc 0)." },
         ],
@@ -1461,13 +1461,13 @@ const CASES = [
       },
 
       {
-        ref: "MC-001-57",
+        ref: "MC-PACKET-57",
         severity: "low",
         redacted: false,
         mod: "Carry On",
         version: "1.12.7.23",
         cwe: "CWE-862 Missing Authorization",
-        title: "SyncKeybindPacket: `Side.SERVER` (disc 0)",
+        title: "SyncKeybindPacket - `Side.SERVER` (disc 0)",
         packets: [
           { name: "SyncKeybindPacket [low]", does: "SyncKeybindPacketHandler.onMessage \u00b7 channel CarryOn", couldDo: "`Side.SERVER` (disc 0)." },
         ],
@@ -1481,13 +1481,13 @@ const CASES = [
       },
 
       {
-        ref: "MC-001-58",
+        ref: "MC-PACKET-58",
         severity: "low",
         redacted: false,
         mod: "CD4017BE lib",
         version: "6.5.1",
         cwe: "CWE-862 Missing Authorization",
-        title: "SyncNetworkHandler.handlePlayerPacket: Deprecated generic dispatch",
+        title: "SyncNetworkHandler.handlePlayerPacket - deprecated generic dispatch",
         packets: [
           { name: "SyncNetworkHandler.handlePlayerPacket [low]", does: "cd4017be.lib.BlockGuiHandler.onPlayerPacketReceived \u00b7 channel 4017", couldDo: "Deprecated generic dispatch." },
         ],
@@ -1501,13 +1501,13 @@ const CASES = [
       },
 
       {
-        ref: "MC-001-59",
+        ref: "MC-PACKET-59",
         severity: "low",
         redacted: false,
         mod: "llibrary",
         version: "1.7.20",
         cwe: "CWE-862 Missing Authorization",
-        title: "SurvivalTabMessage: Server handler posts a `SurvivalTabClickEvent(message.label, player)`",
+        title: "SurvivalTabMessage - server handler posts a `SurvivalTabClickEvent(message.label, player)`",
         packets: [
           { name: "SurvivalTabMessage [low]", does: "SurvivalTabMessage.onServerReceived \u00b7 channel llibrary", couldDo: "Client-sendable (registered on both sides)." },
         ],
@@ -1521,13 +1521,13 @@ const CASES = [
       },
 
       {
-        ref: "MC-001-60",
+        ref: "MC-PACKET-60",
         severity: "low",
         redacted: false,
         mod: "Locks",
         version: "3.0.0",
         cwe: "CWE-862 Missing Authorization",
-        title: "CheckPinPacket: `Side.SERVER` (disc 3)",
+        title: "CheckPinPacket - `Side.SERVER` (disc 3)",
         packets: [
           { name: "CheckPinPacket [low]", does: "CheckPinPacket.Handler.onMessage \u00b7 channel locks", couldDo: "`Side.SERVER` (disc 3)." },
         ],
@@ -1541,13 +1541,13 @@ const CASES = [
       },
 
       {
-        ref: "MC-001-61",
+        ref: "MC-PACKET-61",
         severity: "low",
         redacted: false,
         mod: "Lost Cities",
         version: "2.0.22",
         cwe: "CWE-862 Missing Authorization",
-        title: "PacketRequestProfile: `Side.SERVER`",
+        title: "PacketRequestProfile - `Side.SERVER`",
         packets: [
           { name: "PacketRequestProfile [low]", does: "PacketRequestProfile.Handler.onMessage \u00b7 channel lostcities", couldDo: "`Side.SERVER`." },
         ],
@@ -1561,13 +1561,13 @@ const CASES = [
       },
 
       {
-        ref: "MC-001-62",
+        ref: "MC-PACKET-62",
         severity: "low",
         redacted: false,
         mod: "Reach Fix",
         version: "1.0.8",
         cwe: "CWE-862 Missing Authorization",
-        title: "CPacketHandlerSyncConfig: Reads the server's reach config and updates the client's reach modifier",
+        title: "CPacketHandlerSyncConfig - reads the server's reach config and updates the client's reach modifier",
         packets: [
           { name: "CPacketHandlerSyncConfig [low]", does: "CPacketHandlerSyncConfig.onMessage \u00b7 channel reachfix", couldDo: "`Side.CLIENT` (registered `ReachFix.java:69`) - NOT client-sendable." },
         ],
@@ -1581,13 +1581,13 @@ const CASES = [
       },
 
       {
-        ref: "MC-001-63",
+        ref: "MC-PACKET-63",
         severity: "low",
         redacted: false,
         mod: "SilentLib",
         version: "3.0.14",
         cwe: "CWE-862 Missing Authorization",
-        title: "MessageLeftClick: Client-sendable (`Side.SERVER`, registered in `SilentLib.preInit`)",
+        title: "MessageLeftClick - client-sendable (`Side.SERVER`, registered in `SilentLib.preInit`)",
         packets: [
           { name: "MessageLeftClick [low]", does: "net.silentchaos512.lib.network.internal.MessageLeftClick.handleMessage \u00b7 channel silentlib", couldDo: "Client-sendable (`Side.SERVER`, registered in `SilentLib.preInit`)." },
         ],
@@ -1601,13 +1601,13 @@ const CASES = [
       },
 
       {
-        ref: "MC-001-64",
+        ref: "MC-PACKET-64",
         severity: "low",
         redacted: false,
         mod: "Wearable Backpacks",
         version: "3.2.6",
         cwe: "CWE-862 Missing Authorization",
-        title: "MessageOpenBackpack: `Side.SERVER` (disc 3)",
+        title: "MessageOpenBackpack - `Side.SERVER` (disc 3)",
         packets: [
           { name: "MessageOpenBackpack [low]", does: "MessageOpenBackpack.Handler.handle \u00b7 channel wearablebackpacks", couldDo: "`Side.SERVER` (disc 3)." },
         ],
