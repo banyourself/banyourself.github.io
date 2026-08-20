@@ -264,14 +264,10 @@
         <div class="lbl">Deployment footprint</div>
         <div class="fp">${packs.map((k) => `
           <div class="fp__row">
-            <div>
-              <span class="fp__n">${esc(k.downloads || "?")}</span>
-              <span class="fp__u">downloads</span>
-            </div>
-            <div>
-              <span class="fp__name">${k.url ? `<a href="${esc(k.url)}" target="_blank" rel="noopener">${esc(k.name)}</a>` : esc(k.name)}</span>
-              ${k.note ? `<span class="fp__note">${esc(k.note)}</span>` : ""}
-            </div>
+            <span class="fp__n">${esc(k.downloads || "?")}</span>
+            <span class="fp__u">downloads</span>
+            <span class="fp__name">${k.url ? `<a href="${esc(k.url)}" target="_blank" rel="noopener">${esc(k.name)}</a>` : esc(k.name)}</span>
+            ${k.note ? `<span class="fp__note">${esc(k.note)}</span>` : ""}
           </div>`).join("")}
         </div>
       </div>` : "";

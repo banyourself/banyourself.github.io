@@ -552,21 +552,36 @@ a:hover { color: var(--stamp-red); }
 .deploy__big { font-family: var(--f-mono); font-size: 1.5rem; font-weight: 600; line-height: 1; }
 .deploy ul { margin: .6rem 0 0; padding-left: 1.1rem; font-size: .9rem; }
 .deploy__sub { margin-top: .9rem; padding-top: .9rem; border-top: 1px solid var(--rule); }
-.fp { display: grid; gap: .45rem; margin-top: .7rem; }
+/* stat cards, one per pack. auto-fit means they sit side by side on desktop and
+   collapse to a single column on a phone with no breakpoint of their own. */
+.fp {
+  display: grid; gap: .7rem; margin-top: .85rem;
+  grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+}
 .fp__row {
-  display: grid; grid-template-columns: minmax(4.6rem, auto) minmax(0, 1fr);
-  gap: 1rem; align-items: center;
-  padding: .55rem .8rem;
+  padding: .9rem 1rem 1rem;
   background: var(--paper-lit);
-  border-left: .25rem solid var(--stamp-red);
+  border: 1px solid var(--rule);
+  border-top: .2rem solid var(--stamp-red);
 }
-.fp__n { font-family: var(--f-mono); font-size: 1.3rem; font-weight: 600; line-height: 1; display: block; }
+.fp__n {
+  display: block; font-family: var(--f-mono);
+  font-size: 2rem; font-weight: 600; line-height: 1; letter-spacing: -.02em;
+}
 .fp__u {
-  font-family: var(--f-mono); font-size: .6rem; letter-spacing: .14em;
-  text-transform: uppercase; color: var(--ink-faint); display: block; margin-top: .2rem;
+  display: block; font-family: var(--f-mono); font-size: .58rem;
+  letter-spacing: .2em; text-transform: uppercase;
+  color: var(--ink-faint); margin-top: .35rem;
 }
-.fp__name { font-family: var(--f-mono); font-size: .95rem; font-weight: 600; }
-.fp__note { display: block; font-size: .82rem; color: var(--ink-soft); margin-top: .1rem; }
+.fp__name {
+  display: block; margin-top: .8rem; padding-top: .65rem;
+  border-top: 1px solid var(--rule-soft);
+  font-family: var(--f-mono); font-size: .92rem; font-weight: 600;
+}
+.fp__note {
+  display: block; font-size: .8rem; line-height: 1.4;
+  color: var(--ink-soft); margin-top: .2rem;
+}
 
 pre {
   background: #201d17; color: #ded4bb;
