@@ -1,5 +1,4 @@
 <!-- Goes in a repo named exactly `banyourself`, as README.md at the root. GitHub renders it on your profile. -->
-<!-- ⟨angle brackets⟩ = placeholder. Can't fill one honestly yet? Delete the line. -->
 <!-- Banner is built by tools/build_mc_banner.py in the banyourself.github.io repo.
      No width attribute on purpose: it renders 1:1 at 876px so the pixels stay sharp. -->
 
