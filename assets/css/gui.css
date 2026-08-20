@@ -206,7 +206,7 @@
   padding-left: 1.6rem;
   box-shadow: var(--bevel-out), inset 0 0 0 2px #fff;
 }
-/* full height and flush to the border, so it reads as the slot's coloured edge
+/* full height and flush to the border, so it reads as the slot's colored edge
    instead of a stripe floating against the label */
 [data-theme="gui"] .finding__bar {
   top: 0; bottom: 0; width: .55rem;
@@ -329,11 +329,14 @@
 
 [data-theme="gui"] .tl { border-left: 3px solid #6b6b6b; }
 [data-theme="gui"] .tl li::before {
-  border-radius: 0; width: .7rem; height: .7rem;
+  border-radius: 0; width: .8rem; height: .8rem;
   background: var(--paper-shade); border: 2px solid #000;
-  box-shadow: var(--bevel-in); left: calc(-1.75rem - 3.5px);
+  /* no bevel here on purpose: --bevel-in paints 2px insets on every side, which on a
+     13px square left about 3px of actual fill showing and made the color look broken.
+     left = padding 1.4rem + half the 3px rule + half the dot (.4rem). */
+  left: calc(-1.8rem - 1.5px);
 }
-[data-theme="gui"] .tl li:last-child::before { background: #7fe018; }
+[data-theme="gui"] .tl li:last-child::before { background: var(--mc-cta); }
 [data-theme="gui"] .tl time { font-size: 1rem; }
 
 [data-theme="gui"] .crumb { border-bottom: 2px solid #6b6b6b; font-size: 1rem; }
@@ -496,6 +499,16 @@
 }
 [data-theme="gui"] .deploy__head { color: #9ad36f; }
 [data-theme="gui"] .deploy__big  { color: #ff7a6b; text-shadow: 2px 2px 0 #000; }
+[data-theme="gui"] .fp__row {
+  background: var(--paper-shade);
+  border: 2px solid #000;
+  border-left: 2px solid #000;
+  box-shadow: var(--bevel-in);
+}
+[data-theme="gui"] .fp__n    { font-family: var(--f-stamp); font-size: 1rem; color: var(--mc-red); }
+[data-theme="gui"] .fp__u    { font-family: var(--f-stamp); font-size: .45rem; color: var(--ink-soft); }
+[data-theme="gui"] .fp__name { font-size: 1.2rem; }
+[data-theme="gui"] .fp__note { font-size: 1.05rem; color: var(--ink-soft); }
 [data-theme="gui"] .deploy .lbl  { color: #b9b9b9; }
 [data-theme="gui"] .deploy a     { color: #7fc4ff; }
 [data-theme="gui"] .deploy a:hover { color: #fff; }
@@ -508,7 +521,10 @@
   font-family: var(--f-mono);
   font-size: .98rem;
   letter-spacing: .08em;
-  padding: .1rem .45rem;
+  /* the event text sits inline right after this box, so it needs a right margin or the
+     two visually collide */
+  padding: .25rem .55rem;
+  margin-right: .6rem;
   margin-bottom: .35rem;
   border: 2px solid #000;
   box-shadow: inset 1px 1px 0 var(--mc-cta-lit), inset -1px -1px 0 var(--mc-cta-lo);

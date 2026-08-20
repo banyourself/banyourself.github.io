@@ -552,6 +552,21 @@ a:hover { color: var(--stamp-red); }
 .deploy__big { font-family: var(--f-mono); font-size: 1.5rem; font-weight: 600; line-height: 1; }
 .deploy ul { margin: .6rem 0 0; padding-left: 1.1rem; font-size: .9rem; }
 .deploy__sub { margin-top: .9rem; padding-top: .9rem; border-top: 1px solid var(--rule); }
+.fp { display: grid; gap: .45rem; margin-top: .7rem; }
+.fp__row {
+  display: grid; grid-template-columns: minmax(4.6rem, auto) minmax(0, 1fr);
+  gap: 1rem; align-items: center;
+  padding: .55rem .8rem;
+  background: var(--paper-lit);
+  border-left: .25rem solid var(--stamp-red);
+}
+.fp__n { font-family: var(--f-mono); font-size: 1.3rem; font-weight: 600; line-height: 1; display: block; }
+.fp__u {
+  font-family: var(--f-mono); font-size: .6rem; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--ink-faint); display: block; margin-top: .2rem;
+}
+.fp__name { font-family: var(--f-mono); font-size: .95rem; font-weight: 600; }
+.fp__note { display: block; font-size: .82rem; color: var(--ink-soft); margin-top: .1rem; }
 
 pre {
   background: #201d17; color: #ded4bb;
@@ -567,10 +582,10 @@ code { font-family: var(--f-mono); font-size: .9em; }
 .tl li { position: relative; padding: 0 0 1rem .3rem; }
 .tl li::before {
   content: ""; position: absolute; top: .55rem;
-  /* centre the dot on the 2px rule: the li sits 1.4rem inside it, so the dot's left
-     edge is that padding, plus half the border, plus half the dot's outer width
-     (.62rem + two 2px rings). */
-  left: calc(-1.71rem - 3px);
+  /* Centre the dot on the 2px rule: padding (1.4rem) + half the border (1px) + half the
+     dot (.31rem). box-sizing is border-box globally, so width ALREADY includes the two
+     2px rings, and the old value added them a second time and sat 2px left of the rule. */
+  left: calc(-1.71rem - 1px);
   width: .62rem; height: .62rem; border-radius: 50%;
   background: var(--paper-lit); border: 2px solid var(--ink-soft);
 }

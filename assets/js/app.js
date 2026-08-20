@@ -255,19 +255,25 @@
 
     // the footprint is a property of the pack, not of any one packet, so it lives on the
     // case and is stated once here rather than repeated on every finding
+    // one row per pack, same shape for each, so the headline and the rest read as one
+    // set instead of a big number followed by a bullet list
     const dep = c.deployment || {};
-    const footprint = dep.headline ? `
+    const packs = dep.headline ? [dep.headline, ...(dep.others || [])] : [];
+    const footprint = packs.length ? `
       <div class="deploy__sub">
         <div class="lbl">Deployment footprint</div>
-        <div class="deploy__big">${esc(dep.headline.downloads)}</div>
-        <div class="lbl" style="margin-top:.25rem">
-          downloads -
-          ${dep.headline.url ? `<a href="${esc(dep.headline.url)}" target="_blank" rel="noopener">${esc(dep.headline.name)}</a>` : esc(dep.headline.name)}
-          ${dep.headline.note ? `(${esc(dep.headline.note)})` : ""}
+        <div class="fp">${packs.map((k) => `
+          <div class="fp__row">
+            <div>
+              <span class="fp__n">${esc(k.downloads || "?")}</span>
+              <span class="fp__u">downloads</span>
+            </div>
+            <div>
+              <span class="fp__name">${k.url ? `<a href="${esc(k.url)}" target="_blank" rel="noopener">${esc(k.name)}</a>` : esc(k.name)}</span>
+              ${k.note ? `<span class="fp__note">${esc(k.note)}</span>` : ""}
+            </div>
+          </div>`).join("")}
         </div>
-        ${(dep.others || []).length ? `<ul>${dep.others.map((o) =>
-          `<li>${o.url ? `<a href="${esc(o.url)}" target="_blank" rel="noopener">${esc(o.name)}</a>` : esc(o.name)}${o.downloads ? `, ${esc(o.downloads)} downloads` : ""}</li>`
-        ).join("")}</ul>` : ""}
       </div>` : "";
 
     const scope = (c.scope || footprint) ? `
