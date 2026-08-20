@@ -6,10 +6,10 @@
 <img src="https://banyourself.github.io/assets/img/mc-banner.gif" alt="Kevin Le, Security Operations and Cloud Security">
 
 ```
-  SUBJECT .............. LE, KEVIN  ·  @banyourself
+  SUBJECT .............. Le, Kevin  ·  @banyourself
   LOCATION ............. Westminster, California
   EDUCATION ............ Coastline College, A.S. Cybersecurity, class of 2027 · GPA 3.47
-  CREDENTIALS .......... CompTIA ×4 · Microsoft ×2 · 2 more in progress
+  CREDENTIALS .......... CompTIA ×4 · Microsoft ×2 · & MORE · 2 in progress
   STATUS ............... Seeking 2027 Internship for Cyber · IT · Cloud/Network Security · & MORE
 ```
 
@@ -39,7 +39,7 @@ how to fix it, and who I told. Full versions live on the
 
 <br>
 
-Decompiled 400+ Forge mods that are actively utilized as a dependency or
+Decompiled 400+ Forge mods that other mods depend on, or that ship inside
 shipped inside modpacks totalling 50M+ downloads on CurseForge, Modrinth,
 and other modded minecraft loaders. Through my own analysis, I was able to discover
 numerous packets with no permission gate that nobody had reported, which might be
@@ -149,7 +149,7 @@ the stab columns existed.
 
 **KevFJ** · SourcePawn · ~870 lines · fork of hiiamu's amuFJ
 
-Funjump practice mode, voted on by players. The interesting part is that three plugins
+Funjump practice mode, voted on by players. The tricky bit is that three plugins
 all want to own `mp_roundtime`, so this one hooks `round_start` as Post specifically
 because hnsmix hooks it as Pre and always runs first.
 
@@ -228,7 +228,7 @@ guarding only `player_spawn` left the round-start loop still granting protection
 
 `Anti-Cheat` · `Anti-VPN` · `Custom Gamemodes` · `C++ / Metamod` · `SQL`
 
-Every fork is published with credits to the original author to the best of my abilities. I also actively utilize every single one of these SourcePawn plugins on two CS:GO servers (NA/EU), and I help manage an active CS2 network at [edan.gg](https://edan.gg/).
+Every fork is published with credits to the original author to the best of my abilities. I run every single one of these SourcePawn plugins on two CS:GO servers (NA/EU), and I help manage an active CS2 network at [edan.gg](https://edan.gg/).
 
 → [Read the full writeups](https://banyourself.github.io/#/case/CS-002)
 
@@ -300,7 +300,7 @@ writer wins: `server.cfg`, then gamemode and map configs, then anything a plugin
 `cfg/sourcemod/`. That ordering is why my movement plugin re-applies its cvar on
 `OnConfigsExecuted` rather than `OnMapStart`.
 
-**Databases, deliberately not shared.** NA uses SQLite local to the game server, EU points at
+**Two databases, on purpose.** NA uses SQLite local to the game server, EU points at
 MySQL on NFOservers web hosting. Same plugins, same schema, two different engines, which only
 works because everything goes through SourceMod's database layer. `databases.cfg` makes
 sharing trivial and I chose not to: one database would be a single point of failure for both

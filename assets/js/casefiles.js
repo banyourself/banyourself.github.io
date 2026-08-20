@@ -912,7 +912,7 @@ const CASES = [
           { name: "MessageClientRequest  [medium]", does: "MessageClientRequest.Handler.onMessage  \u00b7  channel firstaid", couldDo: "Client sends a `Type` byte." },
         ],
         rootCause: "Handler: `MessageApplyHealingItem.Handler.onMessage` -\n`ichttt/mods/firstaid/common/network/MessageApplyHealingItem.java:62`\n\n```\npublic static class Handler\nimplements IMessageHandler<MessageApplyHealingItem, IMessage> {\n    public IMessage onMessage(MessageApplyHealingItem message, MessageContext ctx) {\n        ctx.getServerHandler().field_147369_b.func_184102_h().func_152344_a(() -> {\n            EntityPlayerMP player = ctx.getServerHandler().field_147369_b;\n            AbstractPlayerDamageModel damageModel = (AbstractPlayerDamageModel)Objects.requireNonNull(player.getCapability(CapabilityExtendedHealthSystem.INSTANCE, null));\n            ItemStack stack = player.func_184586_b(message.hand);\n            Item item = stack.func_77973_b();\n            AbstractPartHealer healer = FirstAidRegistryImpl.INSTANCE.getPartHealer(stack);\n            if (healer == null) {\n                FirstAid.LOGGER.warn(\"Player {} has invalid item in hand {} while it should be an healing item\", (Object)player.func_70005_c_(), (Object)item.getRegistryName());\n                player.func_145747_a((ITextComponent)new TextComponentString(\"Unable to apply healing item!\"));\n                return;\n            }\n            stack.func_190918_g(1);\n            AbstractDamageablePart damageablePart = damageModel.getFromEnum(message.part);\n            damageablePart.activeHealer = healer;\n        });\n        return null;\n    }\n}\n```",
-        impact: "Client picks a body part + hand; server consumes one item from that hand and sets it as the\nactive healer on the chosen part. The only gate is that the held item must be a registered\n`AbstractPartHealer` (checked via `FirstAidRegistryImpl.INSTANCE.getPartHealer(stack)`). A\nclient can apply any registered healing item it holds to any part - self-only, consumes the\nitem, no free healing. Weaponization is limited (self-heal with a legitimately-held item),\nbut the packet is unauthenticated beyond the item check.\n\n2 client-sendable packets in this mod, graded 2 medium. Every one is listed above with its\nhandler and channel.",
+        impact: "Client picks a body part + hand; server consumes one item from that hand and sets it as the\nactive healer on the chosen part. The only gate is that the held item must be a registered\n`AbstractPartHealer` (checked via `FirstAidRegistryImpl.INSTANCE.getPartHealer(stack)`). A\nclient can apply any registered healing item it holds to any part - self-only, consumes the\nitem, no free healing. There is not much you can do with it (self-heal with an item you already hold),\nbut the packet is unauthenticated beyond the item check.\n\n2 client-sendable packets in this mod, graded 2 medium. Every one is listed above with its\nhandler and channel.",
         disclosure: [
           { date: "2026-08-15", event: "Reported privately to the mod maintainer and the RLCraft development team" },
           { date: "2026-08-15", event: "RLCraft development team acknowledged the report, confirmed credit, and committed to carrying the fixes in a new mixins mod (RLMixins2), starting with the grappling hook mod, with pull requests welcome" }
@@ -1737,7 +1737,7 @@ Layer two is a reputation lookup (proxycheck.io, with ip-api.com and ipinfo as
 alternates) for anything the ranges miss, and results cache in SQL so repeat
 joins never re-hit the API.
 
-It is deliberately a merge of three older plugins that each did one piece:
+It is a merge of three older plugins that each did one piece:
 CIDR_Blocker ran a MySQL query on every single connect, Lrthrome needed a
 separate Rust daemon, and ProxyKiller did the reputation half. Same features,
 none of the overhead.` },
@@ -1827,13 +1827,13 @@ clock, all mine. The base gamemode is ceLoFaN's.` }
         meta: [["Language", "SourcePawn"], ["Size", "~870 lines"], ["Origin", "Fork of hiiamu's amuFJ"], repoRow("CSGO-KevFJ")],
         beats: [
           { head: "Three plugins, one round clock", body: `Funjump keeps the round open for an hour so people can practice movement. The
-interesting part is not the mode, it is that three plugins all want to own
+hard part is not the mode, it is that three plugins all want to own
 \`mp_roundtime\`: this one wants an hour, hnsmix wants match rounds, hnsova pins
 ten minutes for OVA.
 
 \`mp_roundtime\` only applies from the next round, so the current round has to be
 pinned on the game rules entity too. And FJ hooks \`round_start\` as Post
-deliberately, because hnsmix hooks it as Pre and always runs first, so writing
+on purpose, because hnsmix hooks it as Pre and always runs first, so writing
 from Post means FJ's value is the one that survives.` },
 
           { head: "Gating and menus", body: `A mix owns the round flow, so FJ and a mix cannot share a server. That gets
@@ -2025,7 +2025,7 @@ Cause one: the old build passed channel -1 to the HUD message, which tells the
 engine to pick the next free channel every send, so consecutive updates drew over
 each other. Hard-coding a channel just moves the fight to whichever other plugin
 wanted that slot, so the answer is a synchronizer: SourceMod hands out a stable
-per-client channel and arbitrates.
+per-client channel and sorts out who gets which one.
 
 Cause two: replacing a HUD message blanks its channel for a frame, so redrawing
 once a second strobes once a second. Making the refresh slower made it worse, not
@@ -2122,7 +2122,7 @@ for HTTP, and Minecraft is a TCP protocol on a non-web port, so this is not the
 same "just proxy it" story as putting a website behind them.
 
 The domain is registered at Squarespace and the nameservers point at Cloudflare, so
-the registrar and the DNS host are deliberately separate. That split is worth having:
+the registrar and the DNS host are separate on purpose, and that is worth having:
 the registrar is the account that can transfer the domain away, and it is not the
 account I log into regularly to change records.` }
         ]
@@ -2231,7 +2231,7 @@ its own password, and the same allowlist covers the friends who needed FileZilla
 for file access. The admin surface becomes one door with real auth on it, rather
 than several with weak auth.` },
 
-          { head: "The permission model is the interesting part", body: `Vanilla op is all-or-nothing. No flags, no groups, no way to grant someone the
+          { head: "The permission model is the part that matters", body: `Vanilla op is all-or-nothing. No flags, no groups, no way to grant someone the
 ability to do one thing.
 
 That coarse-grained model is exactly the soil the bug in
@@ -2290,7 +2290,7 @@ drive the servers through it day to day: both hosts give you a web console, so
 the normal admin path is an authenticated dashboard rather than a raw rcon
 socket.
 
-That is worth saying plainly, because it is the real security win. When the
+That is the real security win. When the
 console you reach for every day already sits behind a proper login, rcon stops
 being the thing you leave open for convenience. It is a fallback, not the front
 door.` }
@@ -2395,12 +2395,12 @@ only works because everything goes through SourceMod's database layer instead of
 raw driver calls, which is the sort of abstraction you do not appreciate until
 you actually need it to pay off.
 
-SQLite is right for NA precisely because nothing else needs to read it: no
+SQLite is right for NA because nothing else needs to read it: no
 network hop, no second service to keep alive, and a file you can copy. The moment
 you want a web panel or cross-server reads, that stops being true, which is what
 the EU side buys with MySQL.` },
 
-          { head: "Deliberately not shared", body: `\`databases.cfg\` makes sharing one database trivial, and I chose not to.
+          { head: "Two databases, on purpose", body: `\`databases.cfg\` makes sharing one database trivial, and I chose not to.
 
 Sharing would make ranks, Elo and bans follow a player across regions, which
 sounds like a feature until you count the cost: one database becomes a single
@@ -2469,7 +2469,7 @@ one, and an untested backup is a hope rather than a plan.` }
       { head: "Topology", body: `Two VMs in Oracle VirtualBox: Kali as the attacker, Windows 10 as the target,
 joined by a VirtualBox **internal network** rather than NAT or bridged.
 
-That choice is the whole safety model, so it is worth being precise about it. A
+That choice is the whole safety model, so I want to be exact about it. A
 bridged adapter puts the VM on my real LAN, which means a scan or an exploit
 reaches the actual house. NAT gives the VM outbound internet through the host. An
 internal network is neither: the two VMs can only see each other, and there is no
@@ -2641,7 +2641,7 @@ tuned for ads, and a lot of what I actually wanted gone was telemetry, which
 is not the same category.`
       },
 
-      { head: "What the query log showed", body: `The interesting part of this project was never the blocking. It was reading the
+      { head: "What the query log showed", body: `The best part of this project was never the blocking. It was reading the
 query log, because a network is extremely loud when nobody is listening.
 
 The loudest talkers were not browsers. They were a smart TV and a couple of
@@ -2688,7 +2688,7 @@ it stops a connection from being established and gives you a record that
 something tried, and nothing more than that.`
       },
 
-      { head: "Limitations, which are the interesting part", body: `**DoH and DoT walk straight past it.** A browser doing DNS over HTTPS resolves
+      { head: "Limitations, which are the best part", body: `**DoH and DoT walk straight past it.** A browser doing DNS over HTTPS resolves
 through port 443 to its own provider and never asks the Pi at all. Firefox
 shipped this on by default in some regions and Chrome will use it opportunistically.
 You can block the known DoH endpoints, and Pi-hole ships a list for exactly that,
