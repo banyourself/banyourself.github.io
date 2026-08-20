@@ -326,7 +326,7 @@
 [data-theme="gui"] .tl li::before {
   border-radius: 0; width: .7rem; height: .7rem;
   background: var(--paper-shade); border: 2px solid #000;
-  box-shadow: var(--bevel-in); left: -1.92rem;
+  box-shadow: var(--bevel-in); left: calc(-1.75rem - 3.5px);
 }
 [data-theme="gui"] .tl li:last-child::before { background: #7fe018; }
 [data-theme="gui"] .tl time { font-size: 1rem; }

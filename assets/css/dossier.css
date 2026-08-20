@@ -511,18 +511,33 @@ a:hover { color: var(--stamp-red); }
 .beat__h::after { content: ""; flex: 1; height: 1px; background: var(--rule-soft); }
 .beat p { margin: 0 0 .9rem; }
 
-.tbl { width: 100%; border-collapse: collapse; margin: .5rem 0 1rem; font-size: .9rem; }
+.tbl {
+  width: 100%; border-collapse: collapse; margin: .5rem 0 1rem; font-size: .9rem;
+  /* fixed layout so the columns honour the widths below instead of being pushed
+     wide by long handler paths, which overflowed the writeup box. */
+  table-layout: fixed; line-height: 1.45;
+}
+/* table-layout:fixed takes its widths from the first row, so set them here */
+.tbl th:nth-child(1) { width: 25%; }
+.tbl th:nth-child(2) { width: 40%; }
+.tbl th:nth-child(3) { width: 35%; }
 .tbl caption {
   text-align: left; font-family: var(--f-mono); font-size: .7rem;
   letter-spacing: .1em; text-transform: uppercase; color: var(--ink-faint);
   padding-bottom: .5rem;
 }
-.tbl th, .tbl td { text-align: left; padding: .55rem .7rem; border: 1px solid var(--rule); vertical-align: top; }
+.tbl th, .tbl td {
+  text-align: left; padding: .55rem .7rem; border: 1px solid var(--rule);
+  vertical-align: top;
+  /* handler paths and channel names are long unbroken tokens, so they have to be
+     allowed to break or they force the table wider than its container. */
+  overflow-wrap: anywhere; word-break: break-word;
+}
 .tbl th {
   font-family: var(--f-mono); font-size: .68rem; letter-spacing: .1em;
   text-transform: uppercase; background: var(--paper-shade); font-weight: 600;
 }
-.tbl td:first-child { font-family: var(--f-mono); font-size: .85rem; white-space: nowrap; }
+.tbl td:first-child { font-family: var(--f-mono); font-size: .85rem; }
 .tbl tbody tr:nth-child(even) { background: rgba(215,195,154,.16); }
 
 .deploy {
@@ -546,7 +561,11 @@ code { font-family: var(--f-mono); font-size: .9em; }
 .tl { list-style: none; margin: .5rem 0 0; padding: 0 0 0 1.4rem; border-left: 2px solid var(--rule); }
 .tl li { position: relative; padding: 0 0 1rem .3rem; }
 .tl li::before {
-  content: ""; position: absolute; left: -1.82rem; top: .55rem;
+  content: ""; position: absolute; top: .55rem;
+  /* centre the dot on the 2px rule: the li sits 1.4rem inside it, so the dot's left
+     edge is that padding, plus half the border, plus half the dot's outer width
+     (.62rem + two 2px rings). */
+  left: calc(-1.71rem - 3px);
   width: .62rem; height: .62rem; border-radius: 50%;
   background: var(--paper-lit); border: 2px solid var(--ink-soft);
 }
