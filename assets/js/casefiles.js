@@ -153,7 +153,7 @@ const CASES = [
     caseNo: "{TODAY}-001",
     title: "Modded Minecraft - Missing Packet Authorization",
     kind: "Vulnerability Research",
-    blurb: "Swept every client-sendable packet registration in RLCraft and RLCraft Dregora, 400+ Forge mods across two packs with 50M+ downloads, and read the server-side handler for each one. Catalogued 211 client-sendable packets across 64 mods whose server handlers run with no permission check, every one written up here: 4 mods critical, 22 high, 13 medium, 25 low. One chains into level-2 command execution. The RLCraft development team acknowledged the report, committed to shipping the fixes in a new mixins mod, and offered credit. One maintainer tightened their packet handling the same day it was reported.",
+    blurb: "Swept every client-sendable packet registration in RLCraft and RLCraft Dregora, 400+ Forge mods across two packs with 50M+ downloads, and read the server-side handler for each one. Found 211 of them whose handlers run with no permission check, across 64 mods. Every single one is written up here: 4 mods critical, 22 high, 13 medium, 25 low. One chains all the way into level-2 command execution. The RLCraft dev team acknowledged the report, committed to shipping the fixes in a new mixins mod, and offered credit. One maintainer tightened their packet handling the same day I sent it.",
     status: { reported: true, patched: false, credited: false, cve: false },
     period: "Aug 2026 to present",
     scope: "Static analysis of jars I already had from hosting the pack, plus testing against my own local servers through a client-side mod I wrote for the purpose. Nothing unauthorized was touched. Every packet registration was cross-checked against two exposed-packet inventories built from the jars before any handler was graded. Reported privately to maintainers and the RLCraft development team before publishing anything. They confirmed the ungated packets were a known concern, are building a mixins mod to carry the fixes, and invited pull requests against it.",
@@ -601,7 +601,7 @@ const CASES = [
           { name: "SDodgeMessage [high]", does: "com.elenai.elenaidodge.network.message.SDodgeMessage$Handler.onMessage \u00b7 channel elenaidodge", couldDo: "A client sends a `dir` string and `cooldown` int." },
         ],
         rootCause: "Handler: `com.elenai.elenaidodge.network.message.SDodgeMessage$Handler.onMessage`\n(SDodgeMessage.java:72-86)\n\n```\nvoid processMessage(SDodgeMessage message, MessageContext ctx) {\n    EntityPlayerMP player = ctx.getServerHandler().field_147369_b;\n    DodgeEvent.ServerDodgeEvent event = new DodgeEvent.ServerDodgeEvent(DodgeEvent.Direction.valueOf(message.dir), Utils.calculateForce((EntityPlayer)player), (EntityPlayer)player, message.cooldown);\n    if (!MinecraftForge.EVENT_BUS.post(event)) {\n        Utils.handleDodge(DodgeEvent.Direction.valueOf(message.dir), event, player);\n    }\n}\n```",
-        impact: "A client sends a `dir` string and `cooldown` int. The server posts a\n`DodgeEvent.ServerDodgeEvent` and, if not cancelled, calls `Utils.handleDodge(dir, event,\nplayer)` - applying a dodge (movement impulse) to the sender. The client fully controls the\ndodge direction and cooldown, so it can dodge on demand regardless of the mod's\nstamina/cooldown rules.",
+        impact: "A client sends a `dir` string and `cooldown` int. The server posts a\n`DodgeEvent.ServerDodgeEvent` and, if not canceled, calls `Utils.handleDodge(dir, event,\nplayer)` - applying a dodge (movement impulse) to the sender. The client fully controls the\ndodge direction and cooldown, so it can dodge on demand regardless of the mod's\nstamina/cooldown rules.",
         disclosure: [
           { date: "2026-08-15", event: "Reported privately to the mod maintainer and the RLCraft development team" },
           { date: "2026-08-15", event: "RLCraft development team acknowledged the report, confirmed credit, and committed to carrying the fixes in a new mixins mod (RLMixins2), starting with the grappling hook mod, with pull requests welcome" }
@@ -1660,17 +1660,17 @@ const CASES = [
         sub: "SourcePawn · 7,400 lines · my own work",
         meta: [["Language", "SourcePawn"], ["Size", "~7,400 lines"], ["Origin", "Mine"], repoRow("CSGO-KevAC")],
         beats: [
-          { head: "Why server-side", body: `Client-side anticheat trusts the machine you are trying to catch. Server-side
+          { head: "Why server-side", body: `Client-side anticheat trusts the machine you're trying to catch. Server-side
 only trusts what the server can observe, so you end up writing behavioral
-detections against a noisy signal and tuning out false positives. That is the
+detections against a noisy signal and tuning out false positives. That's the
 same job as writing rules for a SIEM, just with a different hat on, and it is
-the part of this project I would lead with in an interview.
+the part of this project I'd lead with in an interview.
 
 About 45 detectors, split across movement, aim, command cadence, and cvar state.` },
 
           { head: "The detector I like best", body: `The cheat-cvar probe. Every entry in \`cheat_convars.ini\` is an FCVAR_CHEAT
 client cvar plus the value the engine forces. A legitimate client physically
-cannot change one of those while the server has sv_cheats 0, so if a client
+can't change one of those while the server has sv_cheats 0, so if a client
 reports a different value, its cvar protection has been patched. That makes it
 a zero-false-positive signal, which is rare and worth a lot when the rest of
 your detections are statistical.
@@ -1685,7 +1685,7 @@ whitelisted SteamIDs skip the cvar checks entirely. SourceBans++ is optional, an
 when it is missing the plugin falls back to a local ban rather than erroring out
 and leaving the player connected.
 
-There is also a public native, \`KevAC_IgnoreMovement\`, so a trusted movement
+There's also a public native, \`KevAC_IgnoreMovement\`, so a trusted movement
 plugin can flag the exact tick where it teleported someone. It suppresses only
 the outcome-based movement checks for that tick. Command cadence, angles and cvar
 detections stay live, because otherwise the exemption becomes the cheat.` }
@@ -1696,14 +1696,14 @@ detections stay live, because otherwise the exemption becomes the cheat.` }
         ref: "CS-002-B",
         severity: "critical",
         title: "KevAC Extension - C++ Metamod plugin, ListenEvents detour",
-        sub: "C++ · Metamod:Source · the part SourcePawn cannot reach",
+        sub: "C++ · Metamod:Source · the part SourcePawn can't reach",
         meta: [["Language", "C++"], ["Size", "~800 lines"], ["Origin", "Mine"], repoRow("CSGO-KevAC-Extension")],
         beats: [
           { head: "What SourcePawn cannot see", body: `In Source, the client tells the server which network events it wants to listen
-for. You cannot touch that list from SourcePawn at all. Injected DLLs register
+for. You can't touch that list from SourcePawn at all. Injected DLLs register
 extra listeners there to receive events they were never meant to see, which
-makes it the cleanest catch in the whole project: it is not a threshold or a
-heuristic, it is a list that should not have that entry in it.
+makes it the cleanest catch in the whole project: it's not a threshold or a
+heuristic, it is a list that shouldn't have that entry in it.
 
 So this half is a C++ Metamod extension that detours \`ListenEvents\` and checks
 the registration against a blacklist. Everything else, detectors and actions and
@@ -1736,7 +1736,7 @@ Layer two is a reputation lookup (proxycheck.io, with ip-api.com and ipinfo as
 alternates) for anything the ranges miss, and results cache in SQL so repeat
 joins never re-hit the API.
 
-It is a merge of three older plugins that each did one piece:
+It's a merge of three older plugins that each did one piece:
 CIDR_Blocker ran a MySQL query on every single connect, Lrthrome needed a
 separate Rust daemon, and ProxyKiller did the reputation half. Same features,
 none of the overhead.` },
@@ -1755,7 +1755,7 @@ clean is wrong, but treating it as a hit is worse, so it counts as no answer.` }
 nothing and blocking it hits every 5G player on the server.
 
 Cloudflare WARP needed its own ASN entry, because its egress lives in
-104.28.0.0/16, which is not in Cloudflare's published CDN list and not in the
+104.28.0.0/16, which isn't in Cloudflare's published CDN list and not in the
 datacenter feeds either. GeForce Now was the other one: it lives in ranges that
 read as datacenter, so a provider allowlist gets the last word over every feed
 that calls a company a datacenter.` }
@@ -1772,7 +1772,7 @@ that calls a company a datacenter.` }
           { head: "What it does", body: `Captain-based ranked matches from 1v1 up to 10v10. Captains get picked, players
 get drafted, the match runs, and Elo settles afterwards. Everything persists in
 SQL, and rank tags go on the scoreboard through HexTags rather than by writing
-clan tags directly, so the two plugins do not fight over who owns the tag.
+clan tags directly, so the two plugins don't fight over who owns the tag.
 
 It is the largest thing in this project by a wide margin and it owns the round
 flow while a match is live, which is why the other plugins have to check with it
@@ -1780,12 +1780,12 @@ before they touch \`mp_roundtime\`.` },
 
           { head: "Discord without spamming it", body: `A live server-status embed and a leaderboard embed, both pushed through REST in
 Pawn. The status card edits one existing Discord message instead of posting a new
-one, so the channel does not fill up. That means storing the message id, which
+one, so the channel doesn't fill up. That means storing the message id, which
 means having a way out when the message gets deleted: \`!mixstatus new\` drops the
 stored id so the next send posts fresh.
 
-Refreshes are event-driven with a 90 second safety net, and there is a change
-guard so an embed that has not actually changed does not get re-sent.` }
+Refreshes are event-driven with a 90 second safety net, and there's a change
+guard so an embed that hasn't actually changed does not get re-sent.` }
         ]
       },
 
@@ -1802,7 +1802,7 @@ new T where they stand. The handover is the whole feel of the mode, so it uses
 team's model on them and nothing respawns them on the in-place path, so the model
 gets refreshed by hand and every team change routes through one function.
 
-Player collision had to go too, since a single T cannot escape a wall of bodies.
+Player collision had to go too, since a single T can't escape a wall of bodies.
 \`mp_solid_teammates 0\` stops horizontal blocking but still lets people stand on
 your head, which is the part that gets abused, so the collision group does the
 real work.` },
@@ -1826,7 +1826,7 @@ clock, all mine. The base gamemode is ceLoFaN's.` }
         meta: [["Language", "SourcePawn"], ["Size", "~870 lines"], ["Origin", "Fork of hiiamu's amuFJ"], repoRow("CSGO-KevFJ")],
         beats: [
           { head: "Three plugins, one round clock", body: `Funjump keeps the round open for an hour so people can practice movement. The
-hard part is not the mode, it is that three plugins all want to own
+hard part isn't the mode, it is that three plugins all want to own
 \`mp_roundtime\`: this one wants an hour, hnsmix wants match rounds, hnsova pins
 ten minutes for OVA.
 
@@ -1835,7 +1835,7 @@ pinned on the game rules entity too. And FJ hooks \`round_start\` as Post
 on purpose, because hnsmix hooks it as Pre and always runs first, so writing
 from Post means FJ's value is the one that survives.` },
 
-          { head: "Gating and menus", body: `A mix owns the round flow, so FJ and a mix cannot share a server. That gets
+          { head: "Gating and menus", body: `A mix owns the round flow, so FJ and a mix can't share a server. That gets
 checked on a timer rather than on a round boundary, because a mix can start at
 any moment, and it gets re-checked when a vote lands rather than only when it
 started.
@@ -1898,7 +1898,7 @@ own anticheat is built to flag. So when this plugin moves someone, it calls
 checks.
 
 The trace filter also had to learn the difference between teammates and enemies,
-so you can boost through your own team but not through someone you are trying to
+so you can boost through your own team but not through someone you're trying to
 get past. Funjump is the exception, because it turns off collision entirely.` }
         ]
       },
@@ -1943,7 +1943,7 @@ a fixed offset, and overwrites the capping instructions with NOPs. It saves the
 original bytes first and restores them on unload, so taking the plugin off does
 not need a server restart.
 
-I include it because it is the reason MovementTweaker has to enforce its own
+I include it because it's the reason MovementTweaker has to enforce its own
 ground cap, and because live-patching server memory by signature is a genuinely
 fragile approach worth being able to talk about: any CS:GO update that touches
 WalkMove breaks it until the signature is refreshed.` },
@@ -1953,7 +1953,7 @@ it compiles on current SourceMod without a wall of deprecation warnings: old
 \`new\` declarations to typed ones, \`Address:\` casts to \`view_as<Address>\`,
 and \`#pragma newdecls required\` so it stays that way.
 
-Peace-Maker's logic and comments are untouched. It is here for completeness, not
+Peace-Maker's logic and comments are untouched. It's here for completeness, not
 as a portfolio piece.` }
         ]
       },
@@ -1965,7 +1965,7 @@ as a portfolio piece.` }
         sub: "SourcePawn · 14 files · fork of Sikarii's MovementHUD",
         meta: [["Language", "SourcePawn"], ["Size", "14 files"], ["Origin", "Fork of Sikarii's MovementHUD"], repoRow("CSGO-movementhud")],
         beats: [
-          { head: "What it is", body: `Configurable movement readouts: current speed, which keys you are holding,
+          { head: "What it's", body: `Configurable movement readouts: current speed, which keys you are holding,
 jump and strafe indicators. Per-player preferences, saved through clientprefs and
 exposed as a shareable settings code.
 
@@ -1973,7 +1973,7 @@ I forked it for the same reason as the rest of the movement stack: our servers
 run a custom speed ceiling, so anything that displays or reasons about speed has
 to agree with MovementTweaker and gstrafe about what the ceiling actually is.` },
 
-          { head: "Why it matters to the other plugins", body: `It owns three HUD channels, at fixed vertical positions. That is the constraint
+          { head: "Why it matters to the other plugins", body: `It owns three HUD channels, at fixed vertical positions. That's the constraint
 that shaped my spectator list in the other case file: HUD channels are a scarce
 resource, six of them exist, and two plugins fighting for one is what a flicker
 actually is.
@@ -1991,7 +1991,7 @@ for that bug was a synchronizer rather than a hard-coded channel.` }
         meta: [["Language", "SourcePawn"], ["Size", "~1,470 lines"], ["Origin", "Fork of Mattia (Hexer10)'s HexTags"], repoRow("CSGO-hextags")],
         beats: [
           { head: "The bug worth explaining", body: `Players kept losing their chosen tag after a reconnect or a map change. The saved
-selection was being stored as a KeyValues section symbol, and that symbol is not
+selection was being stored as a KeyValues section symbol, and that symbol isn't
 stable when the config has duplicate selector names, which every real config does
 because you get several admin-flag blocks in a row.
 
@@ -2081,7 +2081,7 @@ the bug report happened to name.` }
     caseNo: "{TODAY}-003",
     title: "Minecraft & CS:GO Servers - Config and Network Management",
     kind: "Infrastructure / Operations",
-    blurb: "Running public game servers is a sysadmin job wearing a hoodie, and the two games are genuinely different jobs. Minecraft was one box I owned end to end: DNS, a balancer, the JVM, the restart schedule. CS:GO is two rented servers on two continents, where the interesting problems are config that fights itself and deciding what NOT to share between regions.",
+    blurb: "Running public game servers is a sysadmin job wearing a hoodie. The two games turned out to be completely different jobs. Minecraft was one box I owned end to end: DNS, a balancer, the JVM, the restart schedule. CS:GO is two rented servers on two continents, where the real problems are config that fights itself and working out what NOT to share between regions.",
     status: { shipped: true },
     period: "2024 to present",
     scope: "Servers I run and pay for. CS:GO on NFOservers (NA) and dathost (EU), plus a public modded Minecraft server on Proxmox. I also help manage an active CS2 network at [edan.gg](https://edan.gg/).",
@@ -2471,9 +2471,9 @@ joined by a VirtualBox **internal network** rather than NAT or bridged.
 That choice is the whole safety model, so I want to be exact about it. A
 bridged adapter puts the VM on my real LAN, which means a scan or an exploit
 reaches the actual house. NAT gives the VM outbound internet through the host. An
-internal network is neither: the two VMs can only see each other, and there is no
-path to the host or the LAN at all. Nothing I do inside can leak out, and nothing
-outside can wander in.
+internal network is neither. The two VMs can only see each other, and there's no
+path to the host or the LAN at all. Nothing I do inside leaks out. Nothing outside
+wanders in.
 
 \`\`\`
 # both VMs on the same isolated segment, no host or LAN reachability
@@ -2483,18 +2483,17 @@ VBoxManage modifyvm "win10-target"  --nic1 intnet --intnet1 "labnet"
 
 The trade is that an internal network has no DHCP and no internet, so both boxes
 get static addresses and anything I want installed has to go on before I cut them
-off. That is a real inconvenience and I would still make the same call, because
-"my lab cannot reach my family's laptops" is worth more than convenience.
+off. That's a real inconvenience and I'd still make the same call, because
+"my lab can't reach my family's laptops" is worth more than convenience.
 
 \`\`\`
 kali-attacker    10.10.10.5/24
 win10-target     10.10.10.10/24
 \`\`\`
 
-Windows Defender is off on the target on purpose. Not because I am pretending it
-does not exist, but because the point is to see what the logs record, and an
-endpoint product that blocks the action before it happens means there is nothing
-to find in the log. Turning it back on and re-running is a separate exercise
+Windows Defender is off on the target on purpose. Not because I'm pretending it
+doesn't exist, but because the point is to see what the logs record. An endpoint
+product that blocks the action before it happens leaves nothing in the log to find. Turning it back on and re-running is a separate exercise
 about what Defender catches, which is a different question.`
       },
 
@@ -2508,7 +2507,7 @@ nmap -sS -p- -T4 10.10.10.10
 \`\`\`
 
 **What fired:** almost nothing, and that was the lesson. A SYN scan never
-completes the handshake, so Windows does not log a connection because from its
+completes the handshake, so Windows doesn't log a connection, because from its
 point of view no connection happened. The Security log had nothing to say. What
 did show up was in the firewall log, and only because I turned dropped-packet
 logging on, which is off by default.
@@ -2519,9 +2518,9 @@ netsh advfirewall set allprofiles logging droppedconnections enable
 # -> %systemroot%\\system32\\LogFiles\\Firewall\\pfirewall.log
 \`\`\`
 
-**What that taught me:** the detection was not a rule, it was a log source I did
-not have turned on. You cannot alert on data you never collected, and the default
-Windows configuration collects a lot less than you would assume.
+**What that taught me:** the detection wasn't a rule, it was a log source I never
+turned on. You can't alert on data you never collected, and Windows collects a lot
+less by default than you'd assume.
 
 **Exercise: failed logons.** Repeated authentication attempts against the target,
 then searching for the pattern rather than the individual event.
@@ -2538,11 +2537,11 @@ over a time window is the first time the difference between "an event" and "a
 detection" actually clicked for me.
 
 **What did not fire:** a successful logon after failures looks completely normal
-in isolation. 4624 on its own says nothing. It is only interesting sitting next to
+in isolation. 4624 on its own says nothing. It's only interesting sitting next to
 a burst of 4625 from the same source, which means the detection has to correlate
 two event codes rather than match one.
 
-**Getting logs in at all.** Splunk does not read Windows events by magic, it
+**Getting logs in at all.** Splunk doesn't read Windows events by magic, it
 needs the universal forwarder pointed at the channels you want.
 
 \`\`\`
@@ -2559,8 +2558,8 @@ index = win
 
       { head: "What broke", body: `Plenty, and the failures taught me more than the successes.
 
-**I built the network wrong first.** The VMs started on NAT, because that is the
-default and I wanted them to have internet. They could not see each other, I spent
+**I built the network wrong first.** The VMs started on NAT, because that's the
+default and I wanted them to have internet. They couldn't see each other. I spent
 an evening convinced nmap was broken, and the actual problem was that NAT gives
 each VM its own private slice with no path between them. Internal networking is
 the fix, and I only understood the difference between the VirtualBox modes because
@@ -2573,11 +2572,11 @@ rather than punching a hole in the isolation, which was the more tempting option
 and the wrong one.
 
 **A Pi Zero is not a Splunk host.** I briefly wondered whether the Pi already
-running Pi-hole could take log ingest as well. It cannot, and finding out where
-that ceiling is was useful.
+running Pi-hole could take log ingest too. It can't, and finding out where that
+ceiling sits was useful.
 
 **Snapshots saved me repeatedly.** Restoring a clean Windows VM after breaking it
-takes seconds, and the first time I did it I realised I had been avoiding
+takes seconds, and the first time I did it I realized I'd been avoiding
 experiments because rebuilding felt expensive. Take the snapshot first and the
 whole thing gets less precious.`
       }
@@ -2612,9 +2611,9 @@ brings its own resolver just walks past it, and on my network that was most of
 the interesting traffic.
 
 Running DHCP on the Pi instead means the Pi hands out its own address as the DNS
-server in the lease, so a device is told to use it before it ever asks. That is
-DHCP option 6, and it is the difference between filtering the devices that
-cooperate and filtering the ones that do not.
+server in the lease, so a device is told to use it before it ever asks. That's
+DHCP option 6, and it's the difference between filtering the devices that
+cooperate and filtering the ones that don't.
 
 \`\`\`
 # /etc/dnsmasq.d/02-pihole-dhcp.conf, written by the Pi-hole DHCP toggle
@@ -2636,28 +2635,27 @@ dhcp-option=option6:dns-server,[fd00::10]
 \`\`\`
 
 Blocklists are the default set plus additions of my own. The default lists are
-tuned for ads, and a lot of what I actually wanted gone was telemetry, which
-is not the same category.`
+tuned for ads, and a lot of what I actually wanted gone was telemetry. Not the
+same category.`
       },
 
       { head: "What the query log showed", body: `The best part of this project was never the blocking. It was reading the
 query log, because a network is extremely loud when nobody is listening.
 
-The loudest talkers were not browsers. They were a smart TV and a couple of
+The loudest talkers weren't browsers. They were a smart TV and a couple of
 phones, all beaconing on a fixed interval whether or not anyone was using them,
-and they kept doing it overnight with the house asleep. Once you have seen a
-device phone home every few minutes at 3am you stop thinking of DNS as plumbing.
+and they kept it up overnight with the house asleep. Once you've watched a device
+phone home every few minutes at 3am you stop thinking of DNS as plumbing.
 
 The pattern worth knowing is that volume and importance are unrelated. The
 noisiest domain on the network is almost always something boring like a CDN or an
 NTP pool. What matters is the shape: a device that resolves the same domain on a
 metronome is beaconing, and beaconing is what command-and-control traffic looks
-like too. Same signal, different intent, and DNS alone cannot tell you which one
-you are looking at.
+like too. Same signal, different intent, and DNS alone can't tell you which one
+you're looking at.
 
-Some queries I could not attribute to anything I own, which is its own useful
-result. Not every unknown is malicious, but you cannot say that until you have
-looked.
+Some queries I couldn't attribute to anything I own, which is its own useful
+result. Not every unknown is malicious. You just can't say that until you've looked.
 
 \`\`\`
 # the query the Pi actually answers from, if you want to read it raw
@@ -2679,25 +2677,24 @@ that makes it worth running on a $15 computer.
 The second half is detection rather than prevention. The query log is a log
 source. It tells you which host asked for what and when, so it answers the
 question you actually get asked during an incident: did anything else on this
-network touch that domain. That is the same reason a SOC cares about DNS logs,
+network touch that domain. That's the same reason a SOC cares about DNS logs,
 just at a smaller scale.
 
-What it does not do is inspect content. It sees the name, never the payload. So
-it stops a connection from being established and gives you a record that
-something tried, and nothing more than that.`
+What it doesn't do is inspect content. It sees the name, never the payload. So it
+stops the connection and leaves you a record that something tried. That's all.`
       },
 
       { head: "Limitations, which are the best part", body: `**DoH and DoT walk straight past it.** A browser doing DNS over HTTPS resolves
-through port 443 to its own provider and never asks the Pi at all. Firefox
-shipped this on by default in some regions and Chrome will use it opportunistically.
+through port 443 to its own provider and never asks the Pi at all. Firefox turned
+this on by default in some regions. Chrome uses it when it can.
 You can block the known DoH endpoints, and Pi-hole ships a list for exactly that,
-but it is a blocklist arms race rather than a fix. A device that hardcodes an
-encrypted resolver is simply out of scope.
+but it's a blocklist arms race rather than a fix. A device that hardcodes an
+encrypted resolver is just out of scope.
 
 **Hardcoded resolvers.** A device that ignores the DHCP lease and talks to
 8.8.8.8 directly bypasses everything. The real fix is a firewall rule that
 redirects or drops outbound port 53 to anything except the Pi, which is a router
-job rather than a Pi job, and I have not done it. Naming it is more honest than
+job rather than a Pi job, and I haven't done it. Naming it is more honest than
 pretending DHCP closed the hole.
 
 **Single point of failure.** One Pi Zero is the whole network's DNS. If it falls

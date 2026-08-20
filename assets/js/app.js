@@ -30,6 +30,9 @@
   ));
 
   // ``` fences become <pre>, so you can paste code in raw
+  // runs on already-escaped text, so the only tag it can ever emit is <strong>
+  const bold = (s) => s.replace(/\*\*([^*\n]+)\*\*/g, "<strong>$1</strong>");
+
   function prose(text) {
     if (!text) return "";
     return String(text).split(/```/).map((chunk, i) => {
@@ -38,7 +41,7 @@
       return chunk.split(/\n[ \t]*\n/)
         .map((p) => p.replace(/[ \t]*\n[ \t]*/g, " ").trim())
         .filter(Boolean)
-        .map((p) => `<p>${linkify(esc(p))}</p>`)
+        .map((p) => `<p>${linkify(bold(esc(p)))}</p>`)
         .join("");
     }).join("");
   }
