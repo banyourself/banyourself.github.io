@@ -217,20 +217,22 @@
 [data-theme="gui"] .finding__mod  { font-size: 1.05rem; }
 [data-theme="gui"] .finding__ref  { font-family: var(--f-stamp); font-size: .5rem; }
 
+/* green to match the Scope & authorization box, with a soft gradient instead of the
+   flat purple-black. Frame is --mc-green, the same green that box uses. */
 [data-theme="gui"] .writeup__meta {
-  background: #100010;
-  border: 2px solid #100010;
+  background: linear-gradient(160deg, #0a1c0f 0%, #04120a 55%, #00100a 100%);
+  border: 2px solid #00100a;
   box-shadow:
-    inset  0  0 0 2px #100010,
-    inset  0  0 0 4px var(--mc-purple),
-    inset  0  0 0 6px #100010;
+    inset  0  0 0 2px #00100a,
+    inset  0  0 0 4px var(--mc-green),
+    inset  0  0 0 6px #00100a;
   padding: 1.2rem 1.3rem;
   color: var(--mc-grey);
-  border-left: 2px solid #100010;
+  border-left: 2px solid #00100a;
 }
-[data-theme="gui"] .writeup__meta .lbl { color: #9b7fd4; }
-[data-theme="gui"] .writeup__meta .val { color: var(--mc-white); text-shadow: 2px 2px 0 #29294a; }
-[data-theme="gui"] .writeup__meta .lead { border-bottom-color: #3a2a5a; }
+[data-theme="gui"] .writeup__meta .lbl { color: #9ad36f; }
+[data-theme="gui"] .writeup__meta .val { color: var(--mc-white); text-shadow: 2px 2px 0 #123a1a; }
+[data-theme="gui"] .writeup__meta .lead { border-bottom-color: #2a5a30; }
 [data-theme="gui"] .writeup__meta p { color: var(--mc-grey) !important; }
 
 [data-theme="gui"] .cred {
