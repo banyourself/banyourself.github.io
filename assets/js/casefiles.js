@@ -159,9 +159,9 @@ const CASES = [
     // the pack footprint applies to every mod in the case, so it is stated once here
     // rather than repeated on each finding
     deployment: {
-      headline: { name: "RLCraft", url: "https://www.curseforge.com/minecraft/modpacks/rlcraft", downloads: "30M+", note: "Most Downloaded CurseForge Modpack and can be downloaded on other platforms" },
+      headline: { name: "RLCraft", url: "https://www.curseforge.com/minecraft/modpacks/rlcraft", downloads: "30M+", note: "Most downloaded CurseForge Modpack and can be downloaded on other platforms" },
       others: [
-        { name: "RLCraft Dregora", url: "https://www.curseforge.com/minecraft/modpacks/rlcraft-dregora", downloads: "1M+" }
+        { name: "RLCraft Dregora", url: "https://www.curseforge.com/minecraft/modpacks/rlcraft-dregora", downloads: "1M+", note: "Over a million downloads on CurseForge, an official variation of RLCraft" }
       ]
     },
     scope: "Static analysis of jars I already had from hosting the pack, plus testing against my own local servers through a client-side mod I wrote for the purpose. Nothing unauthorized was touched. Every packet registration was cross-checked against two exposed-packet inventories built from the jars before any handler was graded. Reported privately to maintainers and the RLCraft development team before publishing anything. They confirmed the ungated packets were a known concern, are building a mixins mod to carry the fixes, and invited pull requests against it.",
