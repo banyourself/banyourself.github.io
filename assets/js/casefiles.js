@@ -161,7 +161,7 @@ const CASES = [
     deployment: {
       headline: { name: "RLCraft", url: "https://www.curseforge.com/minecraft/modpacks/rlcraft", downloads: "50M+", note: "most-downloaded CurseForge modpack" },
       others: [
-        { name: "RLCraft Dregora", url: "", downloads: "1M+" }
+        { name: "RLCraft Dregora", url: "https://www.curseforge.com/minecraft/modpacks/rlcraft-dregora", downloads: "1M+" }
       ]
     },
     scope: "Static analysis of jars I already had from hosting the pack, plus testing against my own local servers through a client-side mod I wrote for the purpose. Nothing unauthorized was touched. Every packet registration was cross-checked against two exposed-packet inventories built from the jars before any handler was graded. Reported privately to maintainers and the RLCraft development team before publishing anything. They confirmed the ungated packets were a known concern, are building a mixins mod to carry the fixes, and invited pull requests against it.",

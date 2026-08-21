@@ -516,6 +516,7 @@
 [data-theme="gui"] .fp__name { font-size: 1.3rem; color: #f0f0f0; border-top-color: #444444; }
 [data-theme="gui"] .fp__note { font-size: 1.1rem; color: #b9b9b9; }
 [data-theme="gui"] .deploy .lbl  { color: #b9b9b9; }
+[data-theme="gui"] .fp__disc { font-family: var(--f-mono); font-size: 1.05rem; color: #b9b9b9; }
 [data-theme="gui"] .deploy a     { color: #7fc4ff; }
 [data-theme="gui"] .deploy a:hover { color: #fff; }
 

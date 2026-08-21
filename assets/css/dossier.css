@@ -549,6 +549,13 @@ a:hover { color: var(--stamp-red); }
   padding: 1rem 1.2rem; margin: 0 0 1.4rem;
 }
 .deploy__head { font-family: var(--f-stamp); letter-spacing: .1em; text-transform: uppercase; font-size: .82rem; margin-bottom: .6rem; }
+/* .lbl is --ink-faint, which is 4.53:1 on paper-lit but only 4.18:1 on the .deploy
+   box's darker --paper. Bump it inside this box only. */
+.deploy .lbl { color: var(--ink-soft); }
+.fp__disc {
+  text-transform: none; letter-spacing: normal; font-weight: 400;
+  font-size: .78rem; color: var(--ink-soft); margin-left: .45rem;
+}
 .deploy__big { font-family: var(--f-mono); font-size: 1.5rem; font-weight: 600; line-height: 1; }
 .deploy ul { margin: .6rem 0 0; padding-left: 1.1rem; font-size: .9rem; }
 .deploy__sub { margin-top: .9rem; padding-top: .9rem; border-top: 1px solid var(--rule); }
