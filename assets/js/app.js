@@ -261,7 +261,7 @@
     const packs = dep.headline ? [dep.headline, ...(dep.others || [])] : [];
     const footprint = packs.length ? `
       <div class="deploy__sub">
-        <div class="lbl">Deployment footprint<span class="fp__disc">- all mods mentioned below can be found actively deployed in the following modpacks below;</span></div>
+        <div class="lbl">Deployment footprint<span class="fp__disc">- all mods mentioned below are actively deployed in the following modpacks;</span></div>
         <div class="fp">${packs.map((k) => `
           <div class="fp__row">
             <span class="fp__n">${esc(k.downloads || "?")}</span>
