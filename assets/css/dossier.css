@@ -113,7 +113,10 @@ a:hover { color: var(--stamp-red); }
   font-size: .875rem;
   letter-spacing: .1em;
   text-transform: uppercase;
-  padding: .35rem .8rem;
+  /* body line-height is 1.65, which left a lot of dead air above and below the
+     caps and made the box read as oversized next to its own text. */
+  line-height: 1;
+  padding: .38rem .72rem;
   border: 2.5px solid currentColor;
   border-radius: 2px;
   color: var(--stamp-red);
@@ -125,7 +128,7 @@ a:hover { color: var(--stamp-red); }
 .stamp--ok    { color: var(--stamp-green); transform: rotate(3deg); }
 .stamp--info  { color: var(--stamp-blue);  transform: rotate(-2deg); }
 .stamp--void  { color: var(--ink-faint);   transform: rotate(6deg); opacity: .5; border-style: double; }
-.stamp--lg    { font-size: 1.25rem; padding: .5rem 1.1rem; border-width: 3px; }
+.stamp--lg    { font-size: 1.25rem; padding: .45rem .85rem; border-width: 3px; }
 
 @media (prefers-reduced-motion: no-preference) {
   .stamp[data-land] { opacity: 0; transform: rotate(-5deg) scale(1.35); }

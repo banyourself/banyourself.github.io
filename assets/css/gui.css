@@ -280,24 +280,37 @@
 [data-theme="gui"] .caps li:has(.lvl--learning) .lead::after { width: 22%;                background: #8a8a8a; }
 [data-theme="gui"] .lvl { font-family: var(--f-stamp); font-size: .52rem; }
 
-/* Every gui surface behind a stamp is dark: the meta box and the page backdrop. A
-   .35 white wash turned all of them to mud, with Credited measuring 1.06:1 against
-   its own background. Dark wash and light ink instead, 6.9:1 to 11.8:1. The border
-   is currentColor so it brightens with the text. */
+/* Stamps land on two very different surfaces in this theme, so they need two
+   treatments. The cover is --paper-lit (#c6c6c6), light: white wash, dark ink,
+   5.0:1 to 7.3:1. */
 [data-theme="gui"] .stamp {
   font-family: var(--f-stamp);
   font-size: .58rem;
   border: 2px solid currentColor;
   border-radius: 0;
   padding: .5rem .6rem;
-  background: rgba(0,0,0,.45);
-  color: #ff8f80;
+  background: rgba(255,255,255,.45);
+  color: var(--mc-red);
   mix-blend-mode: normal;
   opacity: 1;
 }
-[data-theme="gui"] .stamp--ok   { color: #7ee06a; }
-[data-theme="gui"] .stamp--info { color: #7fc4ff; }
-[data-theme="gui"] .stamp--void { color: #9a9a9a; }
+[data-theme="gui"] .stamp--ok   { color: #1d6b1d; }
+[data-theme="gui"] .stamp--info { color: var(--mc-blue); }
+[data-theme="gui"] .stamp--void { color: #4f4f4f; }
+
+/* The meta box and the credit block sit on dark, where a white wash turned Credited
+   into 1.06:1 mud. Dark wash and light ink there, 6.9:1 to 11.8:1. */
+[data-theme="gui"] .writeup__meta .stamp,
+[data-theme="gui"] .credit .stamp {
+  background: rgba(0,0,0,.45);
+  color: #ff8f80;
+}
+[data-theme="gui"] .writeup__meta .stamp--ok,
+[data-theme="gui"] .credit .stamp--ok   { color: #7ee06a; }
+[data-theme="gui"] .writeup__meta .stamp--info,
+[data-theme="gui"] .credit .stamp--info { color: #7fc4ff; }
+[data-theme="gui"] .writeup__meta .stamp--void,
+[data-theme="gui"] .credit .stamp--void { color: #9a9a9a; }
 [data-theme="gui"] .stamp--lg { font-size: .72rem; }
 [data-theme="gui"] .stamp[data-land].landed { opacity: 1; }
 
