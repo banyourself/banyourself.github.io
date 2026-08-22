@@ -595,7 +595,9 @@ a:hover { color: var(--stamp-red); }
 /* evidence screenshots. the sources are dark chrome, so they get a dark mat rather
    than sitting straight on paper. */
 .shot {
-  width: 100%; height: auto;
+  /* max-width, NOT width: the Discord shot is only 566px native and width:100%
+     stretched it past that, which is most of why it looked soft. */
+  max-width: 100%; width: auto; height: auto;
   border: 1px solid var(--ink);
   background: #0d1117;
   margin: .3rem 0 .2rem;

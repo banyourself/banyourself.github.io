@@ -525,7 +525,14 @@
 [data-theme="gui"] .fp__u    { font-family: var(--f-stamp); font-size: .42rem; letter-spacing: .1em; color: #9a9a9a; }
 [data-theme="gui"] .fp__name { font-size: 1.3rem; color: #f0f0f0; border-top-color: #444444; }
 [data-theme="gui"] .fp__note { font-size: 1.1rem; color: #b9b9b9; }
-[data-theme="gui"] .shot { border: 2px solid #000; box-shadow: var(--bevel-out); }
+/* body sets image-rendering: pixelated for the bedrock tile and it inherits into
+   these screenshots, turning their text into blocks. Same override .mug--photo
+   already needed for the portrait. */
+[data-theme="gui"] .shot {
+  border: 2px solid #000;
+  box-shadow: var(--bevel-out);
+  image-rendering: auto;
+}
 [data-theme="gui"] .deploy .lbl  { color: #b9b9b9; }
 [data-theme="gui"] .fp__disc { font-family: var(--f-mono); font-size: 1.05rem; color: #b9b9b9; }
 [data-theme="gui"] .deploy a     { color: #7fc4ff; }
