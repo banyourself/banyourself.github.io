@@ -6,18 +6,34 @@
   const $$ = (s, r = document) => [...r.querySelectorAll(s)];
   const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  // {TOKEN} placeholders in casefiles.js get filled at page load so dates never go stale
-  const NOW = new Date();
+  // {TOKEN} placeholders in casefiles.js get filled at page load so dates never go stale.
+  // Every date on this page is California time, whoever is looking and wherever their
+  // machine is set. America/Los_Angeles tracks PST/PDT by itself, so this stays right
+  // across the DST switch.
+  const LA = "America/Los_Angeles";
+  const laParts = (d) => {
+    const out = {};
+    new Intl.DateTimeFormat("en-US", {
+      timeZone: LA, year: "numeric", month: "2-digit", day: "2-digit"
+    }).formatToParts(d).forEach((x) => { out[x.type] = x.value; });
+    return out;
+  };
+  const laDate = (d) => {
+    const p = laParts(d);
+    return `${p.year}-${p.month}-${p.day}`;
+  };
+
   const pad = (n) => String(n).padStart(2, "0");
-  const YEAR = NOW.getFullYear();
+  const NOW = laParts(new Date());
+  const YEAR = Number(NOW.year);
   const TOKENS = {
     YEAR:        String(YEAR),
     NEXT_YEAR:   String(YEAR + 1),
     // an internship hunt after June is aiming at next summer, not the one that just ended
-    INTERN_YEAR: String(NOW.getMonth() >= 6 ? YEAR + 1 : YEAR),
-    TODAY:       `${YEAR}-${pad(NOW.getMonth() + 1)}-${pad(NOW.getDate())}`,
-    FILEDATE:    `${pad(NOW.getMonth() + 1)}${pad(NOW.getDate())}${pad(YEAR % 100)}`,
-    MONTH:       NOW.toLocaleString("en-US", { month: "long" }),
+    INTERN_YEAR: String(Number(NOW.month) >= 7 ? YEAR + 1 : YEAR),
+    TODAY:       `${NOW.year}-${NOW.month}-${NOW.day}`,
+    FILEDATE:    `${NOW.month}${NOW.day}${pad(YEAR % 100)}`,
+    MONTH:       new Intl.DateTimeFormat("en-US", { timeZone: LA, month: "long" }).format(new Date()),
     NAME:        (typeof SUBJECT !== "undefined" && SUBJECT.name) || "",
     HANDLE:      (typeof SUBJECT !== "undefined" && SUBJECT.handle) || ""
   };
@@ -127,7 +143,8 @@
     $("#m-loc").textContent    = fill(s.location);
     $("#m-status").textContent = fill(s.status);
     $("#foot-left").textContent = fill(`${s.name} · @${s.handle}`);
-    $("#foot-updated").textContent = `Last updated ${new Date(document.lastModified).toISOString().slice(0, 10)}`;
+    const mod = new Date(document.lastModified);
+    $("#foot-updated").textContent = "Last updated " + (isNaN(mod) ? TOKENS.TODAY : laDate(mod));
     $("#about-status").textContent = fill(s.status);
 
     const L = s.links || {};
