@@ -107,7 +107,7 @@ pdf.ln(1.4)
 # ---------- education ----------
 head("Education")
 role("Coastline Community College  |  Associate of Science, Cybersecurity", "Expected April 2027",
-     "Westminster, CA  |  GPA: 3.47")
+     "Westminster, CA  |  GPA: 3.54")
 pdf.ln(0.5)
 line("Relevant Coursework:", "Network Security (Security+), Computer Networking Principles (Network+), "
                             "Introduction to Cybersecurity, Introduction to Python Programming")
