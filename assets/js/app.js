@@ -261,7 +261,7 @@
     const packs = dep.headline ? [dep.headline, ...(dep.others || [])] : [];
     const footprint = packs.length ? `
       <div class="deploy__sub">
-        <div class="lbl">Deployment footprint<span class="fp__disc">- all mods mentioned below are actively deployed in the following modpacks;</span></div>
+        <div class="lbl">Deployment footprint<span class="fp__disc">- the packs and mods these findings reach;</span></div>
         <div class="fp">${packs.map((k) => `
           <div class="fp__row">
             <span class="fp__n">${esc(k.downloads || "?")}</span>
@@ -399,7 +399,7 @@
         <ol class="tl">${f.disclosure.map((d) =>
           `<li><time>${esc(d.date)}</time>${esc(d.event)}</li>`).join("")}
         </ol>
-        ${f.credit ? `<p style="margin-top:1.1rem"><span class="stamp stamp--ok" data-land>Credited</span> &nbsp;${esc(f.credit)}</p>` : ""}
+        ${f.credit ? `<p style="margin-top:1.1rem"><span class="stamp stamp--ok" data-land>Credited</span> &nbsp;${linkify(esc(f.credit))}</p>` : ""}
       </div>` : "";
 
     $("#view-finding").innerHTML = `

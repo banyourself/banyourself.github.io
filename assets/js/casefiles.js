@@ -154,14 +154,15 @@ const CASES = [
     title: "Modded Minecraft - Missing Packet Authorization",
     kind: "Vulnerability Research",
     blurb: "Swept every client-sendable packet registration in RLCraft and RLCraft Dregora, 400+ Forge mods across two packs with 30M+ downloads, and read the server-side handler for each one. Found 211 of them whose handlers run with no permission check, across 64 mods. Every single one is written up here: 4 mods critical, 22 high, 13 medium, 25 low. One chains all the way into level-2 command execution. The RLCraft dev team acknowledged the report, committed to shipping the fixes in a new mixins mod, and offered credit. One maintainer tightened their packet handling the same day I sent it.",
-    status: { reported: true, patched: false, credited: false, cve: false },
+    status: { reported: true, patched: false, credited: true, cve: false },
     period: "August 2026 to Present",
     // the pack footprint applies to every mod in the case, so it is stated once here
     // rather than repeated on each finding
     deployment: {
       headline: { name: "RLCraft", url: "https://www.curseforge.com/minecraft/modpacks/rlcraft", downloads: "30M+", note: "Most downloaded CurseForge Modpack and can be downloaded on other platforms" },
       others: [
-        { name: "RLCraft Dregora", url: "https://www.curseforge.com/minecraft/modpacks/rlcraft-dregora", downloads: "1M+", note: "Over a million downloads on CurseForge, an official variation of RLCraft" }
+        { name: "RLCraft Dregora", url: "https://www.curseforge.com/minecraft/modpacks/rlcraft-dregora", downloads: "1M+", note: "Over a million downloads on CurseForge, an official variation of RLCraft" },
+        { name: "Trinkets & Baubles", url: "https://www.curseforge.com/minecraft/mc-mods/trinkets-and-baubles", downloads: "20M+", note: "The mod that shipped a fix and credited me for the report" }
       ]
     },
     scope: "Static analysis of jars I already had from hosting the pack, plus testing against my own local servers through a client-side mod I wrote for the purpose. Nothing unauthorized was touched. Every packet registration was cross-checked against two exposed-packet inventories built from the jars before any handler was graded. Reported privately to maintainers and the RLCraft development team before publishing anything. They confirmed the ungated packets were a known concern, are building a mixins mod to carry the fixes, and invited pull requests against it.",
@@ -238,8 +239,10 @@ const CASES = [
           { date: "2026-08-11 12:33", event: "Reproduced it on my own local server with the client-side mod I wrote, which is how the impact above was confirmed rather than assumed" },
           { date: "2026-08-12 18:09", event: "Reported privately to the maintainer (XzeroAir) and the RLCraft development team" },
           { date: "2026-08-12 20:57", event: "Maintainer replied the same day: logic checks added and packet handling tightened in-dev, and asked which name to credit the report under" },
-          { date: "2026-08-14 16:24", event: "RLCraft development team acknowledged the report, confirmed credit, and committed to carrying the fixes in a new mixins mod (RLMixins2), starting with the grappling hook mod, with pull requests welcome" }
+          { date: "2026-08-14 16:24", event: "RLCraft development team acknowledged the report, confirmed credit, and committed to carrying the fixes in a new mixins mod (RLMixins2), starting with the grappling hook mod, with pull requests welcome" },
+          { date: "2026-08-21 22:09", event: "Fix shipped in Trinkets & Baubles 0.33.4 on CurseForge, credited as \"KL BanYourself\". The same commit hardened SyncItemDataPacket, the handler in this finding" }
         ],
+        credit: "Credited as \"KL BanYourself\" in Trinkets & Baubles 0.33.4, released 2026-08-21. The same commit hardened SyncItemDataPacket, the handler in this finding. [CurseForge release](https://www.curseforge.com/minecraft/mc-mods/trinkets-and-baubles/files/8703456) and [commit e07d279](https://github.com/XzeroAir/Trinkets/commit/e07d279901cbf64c85d1adee7dd7aa60284a840a)",
         patch: "Should verify the target entity is the sender (or within reach) and gate on permission. No\ncheck in `handleServerSafe`.\n\nThe shape of the guard:\n\n```\n// SyncItemDataPacket, server side. Everything here already exists except the guard.\n@Override\npublic IMessage onMessage(SyncItemDataPacket msg, MessageContext ctx) {\n    EntityPlayerMP player = ctx.getServerHandler().player;\n\n    // Forge calls this on a netty thread, so hop to the world thread first,\n    // then gate BEFORE touching anything.\n    player.getServerWorld().addScheduledTask(() -> {\n        // the sender may only act on itself, never on an arbitrary entity id\n        if (msg.entityId != player.getEntityId()) return;\n\n        // ... existing handler body, unchanged\n    });\n    return null;\n}\n```"
       },
 
