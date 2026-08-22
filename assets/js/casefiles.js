@@ -150,6 +150,14 @@ const CASES = [
 
   {
     id: "MC-001",
+    tags: [
+      { name: "Packet Authorization",   tone: "critical" },
+      { name: "CWE-862",                tone: "high" },
+      { name: "Java Decompilation",     tone: "medium" },
+      { name: "Coordinated Disclosure", tone: "medium" },
+      { name: "Forge",                  tone: "low" },
+      { name: "Client-Side Mod",        tone: "info" }
+    ],
     caseNo: "001",
     title: "Modded Minecraft - Missing Packet Authorization",
     kind: "Vulnerability Research",
