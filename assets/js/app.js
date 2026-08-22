@@ -33,6 +33,14 @@
   // runs on already-escaped text, so the only tag it can ever emit is <strong>
   const bold = (s) => s.replace(/\*\*([^*\n]+)\*\*/g, "<strong>$1</strong>");
 
+  // ![alt](src) -> image. Runs before linkify, whose [text](url) pattern would
+  // otherwise match the second half and leave the "!" behind. src goes through
+  // safeUrl like every other href.
+  const imgs = (s) => s.replace(/!\[([^\]]*)\]\(([^)\s]+)\)/g, (whole, alt, src) => {
+    const u = safeUrl(src.replace(/&amp;/g, "&"));
+    return u ? `<img class="shot" src="${esc(u)}" alt="${alt}" loading="lazy">` : whole;
+  });
+
   function prose(text) {
     if (!text) return "";
     return String(text).split(/```/).map((chunk, i) => {
@@ -41,7 +49,7 @@
       return chunk.split(/\n[ \t]*\n/)
         .map((p) => p.replace(/[ \t]*\n[ \t]*/g, " ").trim())
         .filter(Boolean)
-        .map((p) => `<p>${linkify(bold(esc(p)))}</p>`)
+        .map((p) => `<p>${linkify(imgs(bold(esc(p))))}</p>`)
         .join("");
     }).join("");
   }
@@ -399,7 +407,7 @@
         <ol class="tl">${f.disclosure.map((d) =>
           `<li><time>${esc(d.date)}</time>${esc(d.event)}</li>`).join("")}
         </ol>
-        ${f.credit ? `<p style="margin-top:1.1rem"><span class="stamp stamp--ok" data-land>Credited</span> &nbsp;${linkify(esc(f.credit))}</p>` : ""}
+        ${f.credit ? `<div class="credit"><span class="stamp stamp--ok" data-land>Credited</span>${prose(f.credit)}</div>` : ""}
       </div>` : "";
 
     $("#view-finding").innerHTML = `
